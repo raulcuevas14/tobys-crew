@@ -11,13 +11,13 @@
   },
   {
     "id": 2,
-    "name": "Pro Plan Cachorro",
-    "brand": "Pro Plan",
+    "name": "Nupec Adulto Razas Pequeñas",
+    "brand": "Nupec",
     "description": "Fórmula especial para cachorros en crecimiento",
-    "weight": "4 kg",
-    "price": 459,
+    "weight": "8 kg",
+    "price": 1100,
     "category": "perro",
-    "image": "images/pro-plan-cachorro.jpg"
+    "image": "images/nupec-adulto-rch.jpg"
   },
   {
     "id": 3,
