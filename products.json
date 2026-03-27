@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Nupec Adulto",
+    "brand": "Nupec",
+    "description": "Alimento balanceado para perros adultos",
+    "weight": "8 kg",
+    "price": 970,
+    "category": "perro",
+    "image": "images/nupec-adulto.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Pro Plan Cachorro",
+    "brand": "Pro Plan",
+    "description": "Fórmula especial para cachorros en crecimiento",
+    "weight": "4 kg",
+    "price": 459,
+    "category": "perro",
+    "image": "images/pro-plan-cachorro.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Hill's Science Gato",
+    "brand": "Hill's",
+    "description": "Nutrición científica para gatos adultos",
+    "weight": "2 kg",
+    "price": 329,
+    "category": "gato",
+    "image": "images/hills-gato.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Whiskas Adulto",
+    "brand": "Whiskas",
+    "description": "Croquetas con sabor a pollo para gatos",
+    "weight": "2 kg",
+    "price": 189,
+    "category": "gato",
+    "image": "images/whiskas-adulto.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Pedigree Snack Dental",
+    "brand": "Pedigree",
+    "description": "Premios dentales para higiene bucal",
+    "weight": "180 g",
+    "price": 89,
+    "category": "snack",
+    "image": "images/pedigree-dental.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Temptations Mix Gato",
+    "brand": "Temptations",
+    "description": "Snacks irresistibles variedad mixta",
+    "weight": "85 g",
+    "price": 65,
+    "category": "snack",
+    "image": "images/temptations-mix.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Eukanuba Cachorro",
+    "brand": "Eukanuba",
+    "description": "Alto contenido proteico para razas medianas",
+    "weight": "4 kg",
+    "price": 449,
+    "category": "perro",
+    "image": "images/eukanuba-cachorro.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Purina One Gato",
+    "brand": "Purina",
+    "description": "Con proteína real de salmón y atún",
+    "weight": "1.5 kg",
+    "price": 219,
+    "category": "gato",
+    "image": "images/purina-one-gato.jpg"
+  }
+]
