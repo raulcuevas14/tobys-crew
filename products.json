@@ -21,13 +21,13 @@
   },
   {
     "id": 3,
-    "name": "Hill's Science Gato",
-    "brand": "Hill's",
+    "name": "Cat Chow",
+    "brand": "Purina",
     "description": "Nutrición científica para gatos adultos",
     "weight": "2 kg",
     "price": 329,
     "category": "gato",
-    "image": "images/hills-gato.jpg"
+    "image": "images/catchow-pescado.jpg"
   },
   {
     "id": 4,
