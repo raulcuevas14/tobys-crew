@@ -56,7 +56,7 @@
     "description": "Croquetas con sabor a carne, pollo, frutas y leche para perros",
     "weight": "20 kg",
     "price": 1049,
-    "category": "snack",
+    "category": "perro",
     "image": "images/dogchow-cachorro.jpg"
   },
   {
