@@ -240,8 +240,6 @@ function sendOrder() {
   console.log({ nombre: name, telefono: phone, direccion: address, notas: notes, items: items.map(i => ({ producto: i.product.name, cantidad: i.qty, subtotal: i.product.price * i.qty })), total: cartTotal() });
   console.log("──────────────────────────────────────────────");
 
-  //
-  // Guardar en Notion
   fetch("/.netlify/functions/save-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -254,11 +252,12 @@ function sendOrder() {
     })
   }).catch(err => console.error("Error guardando pedido:", err));
 
-
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
   
   // Open WhatsApp
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
+  //const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  //window.open(url, "_blank");
 
 
   // Reset
