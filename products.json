@@ -5,7 +5,7 @@
     "brand": "Nupec",
     "description": "Alimento balanceado para perros adultos",
     "weight": "8 kg",
-    "price": 970,
+    "price": 969,
     "category": "perro",
     "image": "images/nupec-adulto.jpg"
   },
@@ -15,7 +15,7 @@
     "brand": "Nupec",
     "description": "Fórmula especial para cachorros en crecimiento",
     "weight": "8 kg",
-    "price": 1100,
+    "price": 1099,
     "category": "perro",
     "image": "images/nupec-adulto-rch.jpg"
   },
@@ -24,59 +24,189 @@
     "name": "Cat Chow",
     "brand": "Purina",
     "description": "Nutrición científica para gatos adultos",
-    "weight": "2 kg",
-    "price": 329,
+    "weight": "20 kg",
+    "price": 999,
     "category": "gato",
     "image": "images/catchow-pescado.jpg"
   },
   {
     "id": 4,
-    "name": "Whiskas Adulto",
-    "brand": "Whiskas",
-    "description": "Croquetas con sabor a pollo para gatos",
-    "weight": "2 kg",
-    "price": 189,
-    "category": "gato",
-    "image": "images/whiskas-adulto.jpg"
+    "name": "Dog Chow Adulto Razas Minis y Pequeñas Extra life ",
+    "brand": "Dog Chow",
+    "description": "Croquetas con sabor a carne y pollo para perros",
+    "weight": "25 kg",
+    "price": 1020,
+    "category": "perro",
+    "image": "images/dogchow-adulto-xlife-rch.jpg"
   },
   {
     "id": 5,
-    "name": "Pedigree Snack Dental",
-    "brand": "Pedigree",
-    "description": "Premios dentales para higiene bucal",
-    "weight": "180 g",
-    "price": 89,
-    "category": "snack",
-    "image": "images/pedigree-dental.jpg"
+    "name": "Dog chow adulto razas medianas y grandes",
+    "brand": "Dog Chow",
+    "description": "Croquetas con sabor a carne y pollo para perros",
+    "weight": "25 kg",
+    "price": 999,
+    "category": "perro",
+    "image": "images/dogchow-adulto.rmg.jpg"
   },
   {
     "id": 6,
-    "name": "Temptations Mix Gato",
-    "brand": "Temptations",
-    "description": "Snacks irresistibles variedad mixta",
-    "weight": "85 g",
-    "price": 65,
+    "name": "Dog Chow Cachorro",
+    "brand": "Dog Chow",
+    "description": "Croquetas con sabor a carne, pollo, frutas y leche para perros",
+    "weight": "20 kg",
+    "price": 1049,
     "category": "snack",
-    "image": "images/temptations-mix.jpg"
+    "image": "images/dogchow-cachorro.jpg"
   },
   {
     "id": 7,
-    "name": "Eukanuba Cachorro",
-    "brand": "Eukanuba",
-    "description": "Alto contenido proteico para razas medianas",
-    "weight": "4 kg",
-    "price": 449,
+    "name": "Can Pro Max Adulto",
+    "brand": "Can Pro",
+    "description": "Alimento de mantenimiento economico para perros adultos",
+    "weight": "20 kg",
+    "price": 339,
     "category": "perro",
-    "image": "images/eukanuba-cachorro.jpg"
+    "image": "images/canpromax.jpg"
   },
   {
     "id": 8,
-    "name": "Purina One Gato",
-    "brand": "Purina",
-    "description": "Con proteína real de salmón y atún",
-    "weight": "1.5 kg",
-    "price": 219,
+    "name": "Guf Econocan Adulto",
+    "brand": "Guf",
+    "description": "Alimento de mantenimiento economico para perros adultos",
+    "weight": "20 kg",
+    "price": 349,
+    "category": "perro",
+    "image": "images/guf-econocan.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Nupec Adulto",
+    "brand": "Nupec",
+    "description": "Alimento balanceado para perros adultos",
+    "weight": "20 kg",
+    "price": 1899,
+    "category": "perro",
+    "image": "images/nupec-adulto.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Nupec Cachorro",
+    "brand": "Nupec",
+    "description": "Alimento balanceado ideal para perros cachorros",
+    "weight": "20 kg",
+    "price": 2029,
+    "category": "perro",
+    "image": "images/nupec-cachorro.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Nupec Adulto Renal Care",
+    "brand": "Nupec",
+    "description": "Alimento completo y balanceado para perros a partir de un año, auxiliar en el mantenimiento integral de la salud renal",
+    "weight": "2 kg",
+    "price": 439,
+    "category": "perro",
+    "image": "images/nupec-adulto-renal.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Nupec Cachorro",
+    "brand": "Nupec",
+    "description": "Alimento balanceado ideal para perros cachorros",
+    "weight": "8 kg",
+    "price": 999,
+    "category": "perro",
+    "image": "images/nupec-cachorro.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Nupec Felino Kitten",
+    "brand": "Nupec",
+    "description": "Alimento balanceado para gatitos desde nacidos hasta un año de edad, hembras gestantes y lactantes.",
+    "weight": "3 kg",
+    "price": 549,
     "category": "gato",
-    "image": "images/purina-one-gato.jpg"
+    "image": "images/nupec-felino-kitten.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Nupec Control de Peso",
+    "brand": "Nupec",
+    "description": "Croqueta Weight Control para Perro Adulto DE Raza Mediana y Grande CONTROL DE PESO",
+    "weight": "2 kg",
+    "price": 429,
+    "category": "perro",
+    "image": "images/nupec-contol-peso.jpg"
+  },
+   {
+    "id": 15,
+    "name": "Nupec Control de Peso",
+    "brand": "Nupec",
+    "description": "Croqueta Weight Control para Perro Adulto DE Raza Mediana y Grande CONTROL DE PESO",
+    "weight": "8 kg",
+    "price": 1349,
+    "category": "perro",
+    "image": "images/nupec-contol-peso.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Noble Adulto",
+    "brand": "Grand Pet",
+    "description": "Alimento Seco para Adulto Raza Mediana y Grande",
+    "weight": "20 kg",
+    "price": 999,
+    "category": "perro",
+    "image": "images/noble-adulto.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Noble Cachorro",
+    "brand": "Grand Pet",
+    "description": "Alimento  Seco para Cachorro de todas las razas",
+    "weight": "15 kg",
+    "price": 899,
+    "category": "perro",
+    "image": "images/noble-cachorro.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Gatina",
+    "brand": "Purina",
+    "description": "Alimento balanceado completo para gatos adultos de todas las razas",
+    "weight": "10 kg",
+    "price": 599,
+    "category": "gato",
+    "image": "images/gatina.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Felix",
+    "brand": "Purina",
+    "description": "Alimento balanceado completo para gatos adultos de todas las razas",
+    "weight": "15 kg",
+    "price": 549,
+    "category": "gato",
+    "image": "images/felix.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Pro Plan Adulto Razas Medianas",
+    "brand": "Purina",
+    "description": "Nutrición de avanzada que ayuda a los perros de razas medianas de 1 a 7 años de edad a mantenerse fuertes y llenos de vitalidad",
+    "weight": "13 kg",
+    "price": 1569,
+    "category": "perro",
+    "image": "images/proplan-adulto-rmg.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Pro Plan Puppy Razas Medianas",
+    "brand": "Purina",
+    "description": "Nutrición de avanzada que ayuda a los perros de razas medianas de 1 a 7 años de edad a mantenerse fuertes y llenos de vitalidad",
+    "weight": "13 kg",
+    "price": 1589,
+    "category": "perro",
+    "image": "images/proplan-cachorro-rmg.jpg"
   }
 ]
