@@ -137,7 +137,7 @@
     "weight": "2 kg",
     "price": 429,
     "category": "perro",
-    "image": "images/nupec-contol-peso.jpg"
+    "image": "images/nupec-control-peso.jpg"
   },
    {
     "id": 15,
@@ -147,7 +147,7 @@
     "weight": "8 kg",
     "price": 1349,
     "category": "perro",
-    "image": "images/nupec-contol-peso.jpg"
+    "image": "images/nupec-control-peso.jpg" 
   },
   {
     "id": 16,
