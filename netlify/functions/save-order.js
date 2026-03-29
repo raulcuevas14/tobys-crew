@@ -64,7 +64,7 @@ exports.handler = async (event) => {
             date: { start: new Date().toISOString().split("T")[0] }
           },
           Estatus: {
-            select: { name: "Nuevo" }
+            multi_select: [{ name: "Nuevo" }]
           }
         }
       })
