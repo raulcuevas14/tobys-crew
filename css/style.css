@@ -386,3 +386,38 @@ button { cursor: pointer; font-family: inherit; }
 @media (max-width: 380px) {
   .catalog-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ─── DESCUENTOS ─────────────────────────────────────────────────── */
+.discount-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: #B33A1A; color: white;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 9px; border-radius: 100px;
+  letter-spacing: 0.3px; z-index: 2;
+}
+
+.card-price-wrap { display: flex; flex-direction: column; gap: 1px; }
+.card-price-original {
+  font-size: 12px; color: var(--ink-muted);
+  text-decoration: line-through; line-height: 1;
+}
+.card-price-final {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; font-weight: 900;
+  color: #B33A1A;
+}
+.card-price-normal {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; font-weight: 900;
+  color: var(--ink);
+}
+
+/* Banner global de oferta */
+.promo-banner {
+  background: #B33A1A; color: white;
+  text-align: center; padding: 10px 1.25rem;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.3px; display: none;
+}
+.promo-banner.visible { display: block; }
+.promo-banner em { font-style: normal; font-weight: 800; }

@@ -7,7 +7,8 @@
     "weight": "8 kg",
     "price": 969,
     "category": "perro",
-    "image": "images/nupec-adulto.jpg"
+    "image": "images/nupec-adulto.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "weight": "8 kg",
     "price": 1099,
     "category": "perro",
-    "image": "images/nupec-adulto-rch.jpg"
+    "image": "images/nupec-adulto-rch.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "weight": "20 kg",
     "price": 999,
     "category": "gato",
-    "image": "images/catchow-pescado.jpg"
+    "image": "images/catchow-pescado.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "weight": "25 kg",
     "price": 1020,
     "category": "perro",
-    "image": "images/dogchow-adulto-xlife-rch.jpg"
+    "image": "images/dogchow-adulto-xlife-rch.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "weight": "25 kg",
     "price": 999,
     "category": "perro",
-    "image": "images/dogchow-adulto-rmg.jpg"
+    "image": "images/dogchow-adulto-rmg.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "weight": "20 kg",
     "price": 1049,
     "category": "perro",
-    "image": "images/dogchow-cachorro.jpg"
+    "image": "images/dogchow-cachorro.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "weight": "20 kg",
     "price": 339,
     "category": "perro",
-    "image": "images/canpromax.jpg"
+    "image": "images/canpromax.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "weight": "20 kg",
     "price": 349,
     "category": "perro",
-    "image": "images/guf-econocan.jpg"
+    "image": "images/guf-econocan.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 9,
@@ -87,7 +95,8 @@
     "weight": "20 kg",
     "price": 1899,
     "category": "perro",
-    "image": "images/nupec-adulto.jpg"
+    "image": "images/nupec-adulto.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 10,
@@ -97,7 +106,8 @@
     "weight": "20 kg",
     "price": 2029,
     "category": "perro",
-    "image": "images/nupec-cachorro.jpg"
+    "image": "images/nupec-cachorro.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 11,
@@ -107,7 +117,8 @@
     "weight": "2 kg",
     "price": 439,
     "category": "perro",
-    "image": "images/nupec-adulto-renal.jpg"
+    "image": "images/nupec-adulto-renal.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 12,
@@ -117,7 +128,8 @@
     "weight": "8 kg",
     "price": 999,
     "category": "perro",
-    "image": "images/nupec-cachorro.jpg"
+    "image": "images/nupec-cachorro.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 13,
@@ -127,7 +139,8 @@
     "weight": "3 kg",
     "price": 549,
     "category": "gato",
-    "image": "images/nupec-felino-kitten.jpg"
+    "image": "images/nupec-felino-kitten.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 14,
@@ -137,7 +150,8 @@
     "weight": "2 kg",
     "price": 429,
     "category": "perro",
-    "image": "images/nupec-control-peso.jpg"
+    "image": "images/nupec-control-peso.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
    {
     "id": 15,
@@ -147,7 +161,8 @@
     "weight": "8 kg",
     "price": 1349,
     "category": "perro",
-    "image": "images/nupec-control-peso.jpg" 
+    "image": "images/nupec-control-peso.jpg" ,
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 16,
@@ -157,7 +172,8 @@
     "weight": "20 kg",
     "price": 1069,
     "category": "perro",
-    "image": "images/noble-adulto.jpg"
+    "image": "images/noble-adulto.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 17,
@@ -167,7 +183,8 @@
     "weight": "15 kg",
     "price": 899,
     "category": "perro",
-    "image": "images/noble-cachorro.jpg"
+    "image": "images/noble-cachorro.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 18,
@@ -177,7 +194,8 @@
     "weight": "10 kg",
     "price": 599,
     "category": "gato",
-    "image": "images/gatina.jpg"
+    "image": "images/gatina.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 19,
@@ -187,7 +205,8 @@
     "weight": "15 kg",
     "price": 549,
     "category": "gato",
-    "image": "images/felix.jpg"
+    "image": "images/felix.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 20,
@@ -197,7 +216,8 @@
     "weight": "13 kg",
     "price": 1569,
     "category": "perro",
-    "image": "images/proplan-adulto-rmg.jpg"
+    "image": "images/proplan-adulto-rmg.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   },
   {
     "id": 21,
@@ -207,6 +227,7 @@
     "weight": "13 kg",
     "price": 1589,
     "category": "perro",
-    "image": "images/proplan-cachorro-rmg.jpg"
+    "image": "images/proplan-cachorro-rmg.jpg",
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
   }
 ]

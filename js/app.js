@@ -30,6 +30,41 @@ async function loadProducts() {
   }
 }
 
+// ── DESCUENTOS ────────────────────────────────────────────────────
+function calcularPrecioFinal(p) {
+  const d = p.descuento;
+  if (!d || !d.activo || !d.valor) return p.price;
+  if (d.tipo === "porcentaje") return Math.round(p.price * (1 - d.valor / 100));
+  if (d.tipo === "fijo")       return Math.max(0, p.price - d.valor);
+  return p.price;
+}
+
+function renderBadgeDescuento(p) {
+  const d = p.descuento;
+  if (!d || !d.activo || !d.valor) return "";
+  const label = d.tipo === "porcentaje" ? `−${d.valor}%` : `−$${d.valor}`;
+  return `<span class="discount-badge">${label}</span>`;
+}
+
+function renderPrecio(p) {
+  const d = p.descuento;
+  if (!d || !d.activo || !d.valor) {
+    return `<span class="card-price-normal">$${formatPrice(p.price)}</span>`;
+  }
+  const final = calcularPrecioFinal(p);
+  return `
+    <div class="card-price-wrap">
+      <span class="card-price-original">$${formatPrice(p.price)}</span>
+      <span class="card-price-final">$${formatPrice(final)}</span>
+    </div>`;
+}
+
+function actualizarBanner() {
+  const hayOfertas = products.some(p => p.descuento?.activo && p.descuento?.valor);
+  const banner = document.getElementById("promo-banner");
+  if (banner) banner.classList.toggle("visible", hayOfertas);
+}
+
 // ── CATALOG RENDER ────────────────────────────────────────────────
 function renderCatalog(list) {
   const grid = document.getElementById("catalog-grid");
@@ -53,18 +88,21 @@ function renderCatalog(list) {
           ${imgHtml}
           ${fallback}
           <span class="category-tag ${tagClass}">${tagLabel}</span>
+          ${renderBadgeDescuento(p)}
         </div>
         <div class="card-body">
           <p class="card-brand">${p.brand || ""}</p>
           <h3 class="card-name">${p.name}</h3>
           <p class="card-weight">${p.weight || ""}</p>
           <div class="card-footer">
-            <span class="card-price">$${formatPrice(p.price)}</span>
+            ${renderPrecio(p)}
             <button class="add-btn" onclick="addToCart(${p.id})" aria-label="Agregar ${p.name}">+</button>
           </div>
         </div>
       </article>`;
   }).join("");
+
+  actualizarBanner();
 }
 
 // ── FILTERS ───────────────────────────────────────────────────────
@@ -107,7 +145,7 @@ function updateCartBadge() {
 function cartTotal() {
   return Object.entries(cart).reduce((sum, [id, qty]) => {
     const p = products.find(x => x.id == id);
-    return sum + (p ? p.price * qty : 0);
+    return sum + (p ? calcularPrecioFinal(p) * qty : 0);
   }, 0);
 }
 
@@ -171,7 +209,7 @@ function renderCartItems() {
         <div class="ci-thumb">${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">` : emoji}</div>
         <div class="ci-info">
           <p class="ci-name">${p.name}</p>
-          <p class="ci-price">$${formatPrice(p.price)} × ${qty} = <strong>$${formatPrice(p.price * qty)}</strong></p>
+          <p class="ci-price">$${formatPrice(calcularPrecioFinal(p))} × ${qty} = <strong>$${formatPrice(calcularPrecioFinal(p) * qty)}</strong></p>
         </div>
         <div class="qty-ctrl">
           <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
@@ -240,25 +278,9 @@ function sendOrder() {
   console.log({ nombre: name, telefono: phone, direccion: address, notas: notes, items: items.map(i => ({ producto: i.product.name, cantidad: i.qty, subtotal: i.product.price * i.qty })), total: cartTotal() });
   console.log("──────────────────────────────────────────────");
 
-fetch("/.netlify/functions/save-order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    nombre:    name,
-    telefono:  phone,
-    direccion: address,
-    productos: items.map(i => `${i.product.name} x${i.qty}`).join(", "),
-    total:     cartTotal()
-  })
-}).catch(err => console.error("Error guardando pedido:", err));
-
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-  
   // Open WhatsApp
-  //const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-  //window.open(url, "_blank");
-
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
 
   // Reset
   cart = {};
