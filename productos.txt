@@ -1,0 +1,12 @@
+# Toby's Crew — Lista de productos a investigar
+# Una línea por producto. Las líneas con # son comentarios.
+# Sé específico: incluye marca, nombre y presentación para mejores resultados.
+
+Royal Canin Adulto 3kg
+Pro Plan Cachorro 4kg
+Hill's Science Diet Gato 2kg
+Whiskas Adulto Pollo 2kg
+Pedigree Snack Dental 180g
+Temptations Mix Gato 85g
+Eukanuba Cachorro Razas Medianas 4kg
+Purina One Gato Salmon 1.5kg
