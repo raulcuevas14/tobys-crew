@@ -19,6 +19,45 @@
       --white: #FFFFFF; --border: rgba(26,18,8,0.1);
       --radius: 16px;
     }
+
+    /* LOCK SCREEN */
+    #lock-screen {
+      position: fixed; inset: 0; background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; padding: 1.5rem;
+    }
+    .lock-card {
+      background: var(--cream); border-radius: 24px;
+      padding: 2.5rem 2rem; width: 100%; max-width: 360px;
+      text-align: center;
+    }
+    .lock-icon { font-size: 48px; margin-bottom: 1rem; }
+    .lock-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900; margin-bottom: 0.25rem; }
+    .lock-sub { font-size: 13px; color: var(--ink-muted); margin-bottom: 1.5rem; }
+    .lock-input {
+      width: 100%; padding: 13px 16px; border-radius: 12px;
+      border: 2px solid var(--cream-dark); font-size: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: white; color: var(--ink); outline: none;
+      text-align: center; letter-spacing: 4px; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .lock-input:focus { border-color: var(--gold); }
+    .lock-input.error { border-color: var(--red); animation: shake 0.35s; }
+    .lock-btn {
+      width: 100%; padding: 13px; background: var(--ink); color: white;
+      border: none; border-radius: 12px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .lock-btn:hover { background: #2e2011; }
+    .lock-error { font-size: 12px; color: var(--red); margin-top: 8px; height: 16px; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-8px); }
+      75%      { transform: translateX(8px); }
+    }
+
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
     header {
@@ -144,6 +183,20 @@
   </style>
 </head>
 <body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-icon">🔐</div>
+    <h2 class="lock-title">Área privada</h2>
+    <p class="lock-sub">Toby's Crew — Panel de ventas</p>
+    <input class="lock-input" type="password" id="lock-input"
+      placeholder="••••••" maxlength="20"
+      onkeydown="if(event.key==='Enter') verificarPassword()" />
+    <button class="lock-btn" onclick="verificarPassword()">Entrar</button>
+    <p class="lock-error" id="lock-error"></p>
+  </div>
+</div>
 
 <header>
   <a class="logo" href="index.html">Toby's <em>Crew</em></a>
@@ -472,6 +525,35 @@ function showToast(msg) {
   t.textContent = msg; t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2500);
 }
+
+// ── CONTRASEÑA ────────────────────────────────────────────────────
+const PASSWORD = "tobyscrew2024";   // ← Cambia esto por tu contraseña
+
+function verificarPassword() {
+  const input = document.getElementById("lock-input");
+  const error = document.getElementById("lock-error");
+  const lock  = document.getElementById("lock-screen");
+
+  if (input.value === PASSWORD) {
+    sessionStorage.setItem("tc_auth", "1");
+    lock.style.transition = "opacity 0.3s";
+    lock.style.opacity    = "0";
+    setTimeout(() => lock.remove(), 300);
+  } else {
+    input.classList.add("error");
+    error.textContent = "Contraseña incorrecta";
+    input.value = "";
+    setTimeout(() => { input.classList.remove("error"); error.textContent = ""; }, 2000);
+  }
+}
+
+// Si ya autenticó en esta sesión, quitar el lock directo
+(function() {
+  if (sessionStorage.getItem("tc_auth") === "1") {
+    const lock = document.getElementById("lock-screen");
+    if (lock) lock.remove();
+  }
+})();
 </script>
 </body>
 </html>
