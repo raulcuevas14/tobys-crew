@@ -9,7 +9,7 @@
     "costo": 800,
     "category": "perro",
     "image": "images/nupec-adulto.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "costo": 900,
     "category": "perro",
     "image": "images/nupec-adulto-rch.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 3,
@@ -105,7 +105,7 @@
     "costo": 1740,
     "category": "perro",
     "image": "images/nupec-adulto.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 10,
@@ -117,7 +117,7 @@
     "costo": 1874,
     "category": "perro",
     "image": "images/nupec-cachorro.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 11,
@@ -129,7 +129,7 @@
     "costo": 376,
     "category": "perro",
     "image": "images/nupec-adulto-renal.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 12,
@@ -141,7 +141,7 @@
     "costo": 870,
     "category": "perro",
     "image": "images/nupec-cachorro.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 13,
@@ -165,7 +165,7 @@
     "costo": 345,
     "category": "perro",
     "image": "images/nupec-control-peso.jpg",
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
    {
     "id": 15,
@@ -177,7 +177,7 @@
     "costo": 1199,
     "category": "perro",
     "image": "images/nupec-control-peso.jpg" ,
-    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
+    "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
     "id": 16,
