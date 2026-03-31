@@ -6,6 +6,7 @@
     "description": "Alimento balanceado para perros adultos",
     "weight": "8 kg",
     "price": 969,
+    "costo": 800,
     "category": "perro",
     "image": "images/nupec-adulto.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -17,6 +18,7 @@
     "description": "Fórmula especial para cachorros en crecimiento",
     "weight": "8 kg",
     "price": 1099,
+    "costo": 900,
     "category": "perro",
     "image": "images/nupec-adulto-rch.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -28,6 +30,7 @@
     "description": "Nutrición científica para gatos adultos",
     "weight": "20 kg",
     "price": 999,
+    "costo": 900,
     "category": "gato",
     "image": "images/catchow-pescado.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -38,7 +41,8 @@
     "brand": "Dog Chow",
     "description": "Croquetas con sabor a carne y pollo para perros",
     "weight": "25 kg",
-    "price": 1020,
+    "price": 1019,
+    "costo": 895,
     "category": "perro",
     "image": "images/dogchow-adulto-xlife-rch.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -49,7 +53,8 @@
     "brand": "Dog Chow",
     "description": "Croquetas con sabor a carne y pollo para perros",
     "weight": "25 kg",
-    "price": 999,
+    "price": 1019,
+    "costo": 895,
     "category": "perro",
     "image": "images/dogchow-adulto-rmg.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -61,6 +66,7 @@
     "description": "Croquetas con sabor a carne, pollo, frutas y leche para perros",
     "weight": "20 kg",
     "price": 1049,
+    "costo": 900,
     "category": "perro",
     "image": "images/dogchow-cachorro.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -72,6 +78,7 @@
     "description": "Alimento de mantenimiento economico para perros adultos",
     "weight": "20 kg",
     "price": 339,
+    "costo": 260,
     "category": "perro",
     "image": "images/canpromax.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -83,6 +90,7 @@
     "description": "Alimento de mantenimiento economico para perros adultos",
     "weight": "20 kg",
     "price": 349,
+    "costo": 280,
     "category": "perro",
     "image": "images/guf-econocan.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -94,6 +102,7 @@
     "description": "Alimento balanceado para perros adultos",
     "weight": "20 kg",
     "price": 1899,
+    "costo": 1740,
     "category": "perro",
     "image": "images/nupec-adulto.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -105,6 +114,7 @@
     "description": "Alimento balanceado ideal para perros cachorros",
     "weight": "20 kg",
     "price": 2029,
+    "costo": 1874,
     "category": "perro",
     "image": "images/nupec-cachorro.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -116,6 +126,7 @@
     "description": "Alimento completo y balanceado para perros a partir de un año, auxiliar en el mantenimiento integral de la salud renal",
     "weight": "2 kg",
     "price": 439,
+    "costo": 376,
     "category": "perro",
     "image": "images/nupec-adulto-renal.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -127,6 +138,7 @@
     "description": "Alimento balanceado ideal para perros cachorros",
     "weight": "8 kg",
     "price": 999,
+    "costo": 870,
     "category": "perro",
     "image": "images/nupec-cachorro.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -138,6 +150,7 @@
     "description": "Alimento balanceado para gatitos desde nacidos hasta un año de edad, hembras gestantes y lactantes.",
     "weight": "3 kg",
     "price": 549,
+    "costo": 478,
     "category": "gato",
     "image": "images/nupec-felino-kitten.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -149,6 +162,7 @@
     "description": "Croqueta Weight Control para Perro Adulto DE Raza Mediana y Grande CONTROL DE PESO",
     "weight": "2 kg",
     "price": 429,
+    "costo": 345,
     "category": "perro",
     "image": "images/nupec-control-peso.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -160,6 +174,7 @@
     "description": "Croqueta Weight Control para Perro Adulto DE Raza Mediana y Grande CONTROL DE PESO",
     "weight": "8 kg",
     "price": 1349,
+    "costo": 1199,
     "category": "perro",
     "image": "images/nupec-control-peso.jpg" ,
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -171,6 +186,7 @@
     "description": "Alimento Seco para Adulto Raza Mediana y Grande",
     "weight": "20 kg",
     "price": 1069,
+    "costo": 920,
     "category": "perro",
     "image": "images/noble-adulto.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -182,6 +198,7 @@
     "description": "Alimento  Seco para Cachorro de todas las razas",
     "weight": "15 kg",
     "price": 899,
+    "costo": 775,
     "category": "perro",
     "image": "images/noble-cachorro.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -193,6 +210,7 @@
     "description": "Alimento balanceado completo para gatos adultos de todas las razas",
     "weight": "10 kg",
     "price": 599,
+    "costo": 510,
     "category": "gato",
     "image": "images/gatina.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -204,6 +222,7 @@
     "description": "Alimento balanceado completo para gatos adultos de todas las razas",
     "weight": "15 kg",
     "price": 549,
+    "costo": 490,
     "category": "gato",
     "image": "images/felix.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -215,6 +234,7 @@
     "description": "Nutrición de avanzada que ayuda a los perros de razas medianas de 1 a 7 años de edad a mantenerse fuertes y llenos de vitalidad",
     "weight": "13 kg",
     "price": 1569,
+    "costo": 1430,
     "category": "perro",
     "image": "images/proplan-adulto-rmg.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }
@@ -226,6 +246,7 @@
     "description": "Nutrición de avanzada que ayuda a los perros de razas medianas de 1 a 7 años de edad a mantenerse fuertes y llenos de vitalidad",
     "weight": "13 kg",
     "price": 1589,
+    "costo": 1430,
     "category": "perro",
     "image": "images/proplan-cachorro-rmg.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 10 }

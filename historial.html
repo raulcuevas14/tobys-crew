@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historial de Ventas — Toby's Crew</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1A1208; --ink-soft: #5C4F3A; --ink-muted: #9A8C78;
+      --cream: #FAF6EF; --cream-dark: #F0E9DC;
+      --gold: #C8860A; --gold-light: #FDF0D5; --gold-mid: #E8A620;
+      --green: #2D6A4F; --green-light: #D8F0E5;
+      --red: #B33A1A; --red-light: #FDE8E8;
+      --white: #FFFFFF; --border: rgba(26,18,8,0.1);
+      --radius: 16px; --shadow: 0 4px 20px rgba(26,18,8,0.08);
+    }
+
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+    /* HEADER */
+    header {
+      background: var(--ink); padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; position: sticky; top: 0; z-index: 90;
+    }
+    .logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 900; color: white; text-decoration: none; }
+    .logo em { color: #E8A620; font-style: normal; }
+    .back-btn {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: white; border-radius: 100px; padding: 6px 14px;
+      font-size: 13px; font-weight: 500; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* MAIN */
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+    .page-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; margin-bottom: 0.25rem; }
+    .page-sub { color: var(--ink-muted); font-size: 14px; margin-bottom: 1.5rem; }
+
+    /* PERIOD FILTER */
+    .period-bar { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .period-btn {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 100px; padding: 7px 16px; font-size: 13px;
+      font-weight: 500; cursor: pointer; color: var(--ink-soft);
+      font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+    }
+    .period-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .period-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+
+    /* METRIC CARDS */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+    .metric-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--cream-dark); padding: 1.1rem 1.25rem;
+    }
+    .metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px; }
+    .metric-value { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 900; line-height: 1; }
+    .metric-value.green { color: var(--green); }
+    .metric-value.gold  { color: var(--gold); }
+    .metric-value.red   { color: var(--red); }
+    .metric-sub { font-size: 11px; color: var(--ink-muted); margin-top: 4px; }
+
+    /* CHART */
+    .chart-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--cream-dark); padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 1rem; }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* ORDERS TABLE */
+    .table-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--cream-dark); overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .table-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--cream-dark); display: flex; align-items: center; justify-content: space-between; }
+    .table-header .card-title { margin: 0; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: var(--cream); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.4px; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--cream-dark); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--cream-dark); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--cream); }
+
+    .status-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 3px 9px; border-radius: 100px; letter-spacing: 0.3px;
+    }
+    .status-Nuevo         { background: var(--gold-light); color: var(--gold); }
+    .status-En-preparación { background: #E8F0FE; color: #1A73E8; }
+    .status-En-camino     { background: #FFF3E0; color: #E65100; }
+    .status-Entregado     { background: var(--green-light); color: var(--green); }
+
+    .td-total { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; }
+    .td-ganancia { font-weight: 600; color: var(--green); }
+
+    /* LOADING / EMPTY */
+    .loading { text-align: center; padding: 3rem; color: var(--ink-muted); font-size: 14px; }
+    .loading-spinner { font-size: 32px; display: block; margin-bottom: 0.75rem; animation: spin 1.5s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty { text-align: center; padding: 3rem; color: var(--ink-muted); }
+    .empty-icon { font-size: 40px; margin-bottom: 0.75rem; }
+
+    /* MARGIN CONFIG */
+    .config-bar {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--gold-light); border: 1.5px solid var(--gold-mid);
+      border-radius: var(--radius); padding: 0.9rem 1.25rem;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .config-label { font-size: 13px; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+    .config-input {
+      width: 70px; border: 1.5px solid var(--gold-mid); border-radius: 8px;
+      padding: 6px 10px; font-size: 14px; font-weight: 700; text-align: center;
+      background: white; color: var(--ink); outline: none;
+      font-family: 'Fraunces', serif;
+    }
+    .config-input:focus { border-color: var(--gold); }
+    .config-hint { font-size: 12px; color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">Toby's <em>Crew</em></a>
+  <a class="back-btn" href="index.html">← Volver al catálogo</a>
+</header>
+
+<div class="container">
+  <h1 class="page-title">Historial de ventas 📊</h1>
+  <p class="page-sub" id="last-updated">Cargando datos desde Notion...</p>
+
+  <!-- Margen de ganancia -->
+  <div class="config-bar">
+    <span class="config-label">💰 Margen de ganancia:</span>
+    <input class="config-input" type="number" id="margen-input" value="30" min="0" max="100" />
+    <span class="config-label">%</span>
+    <span class="config-hint">— Ajusta tu margen para calcular ganancia estimada</span>
+  </div>
+
+  <!-- Filtros de período -->
+  <div class="period-bar">
+    <button class="period-btn active" data-period="7">Últimos 7 días</button>
+    <button class="period-btn" data-period="30">Últimos 30 días</button>
+    <button class="period-btn" data-period="90">Últimos 90 días</button>
+    <button class="period-btn" data-period="0">Todo</button>
+  </div>
+
+  <!-- Métricas -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total vendido</div>
+      <div class="metric-value gold" id="m-total">—</div>
+      <div class="metric-sub">en el período</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Ganancia estimada</div>
+      <div class="metric-value green" id="m-ganancia">—</div>
+      <div class="metric-sub" id="m-ganancia-sub">con margen del 30%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Pedidos</div>
+      <div class="metric-value" id="m-pedidos">—</div>
+      <div class="metric-sub">en el período</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Ticket promedio</div>
+      <div class="metric-value" id="m-ticket">—</div>
+      <div class="metric-sub">por pedido</div>
+    </div>
+  </div>
+
+  <!-- Gráfica -->
+  <div class="chart-card">
+    <div class="card-title">Ventas por día</div>
+    <div class="chart-wrap">
+      <canvas id="sales-chart"></canvas>
+    </div>
+  </div>
+
+  <!-- Tabla de pedidos -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="card-title">Pedidos recientes</div>
+    </div>
+    <div id="orders-container">
+      <div class="loading">
+        <span class="loading-spinner">🐾</span>
+        Cargando pedidos...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let todosLosPedidos = [];
+let periodoActivo   = 7;
+let margen          = 30;
+let chart           = null;
+
+// ── INIT ──────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarPedidos();
+
+  document.querySelectorAll(".period-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".period-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      periodoActivo = parseInt(btn.dataset.period);
+      renderDashboard();
+    });
+  });
+
+  document.getElementById("margen-input").addEventListener("input", e => {
+    margen = Math.max(0, Math.min(100, parseInt(e.target.value) || 0));
+    renderDashboard();
+  });
+});
+
+// ── FETCH PEDIDOS ─────────────────────────────────────────────────
+async function cargarPedidos() {
+  try {
+    const res  = await fetch("/.netlify/functions/get-orders");
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    todosLosPedidos = data.pedidos;
+    document.getElementById("last-updated").textContent =
+      `Actualizado: ${new Date().toLocaleString("es-MX")} · ${todosLosPedidos.length} pedidos totales`;
+    renderDashboard();
+  } catch (err) {
+    document.getElementById("orders-container").innerHTML =
+      `<div class="empty"><div class="empty-icon">⚠️</div><p>Error cargando datos: ${err.message}</p></div>`;
+  }
+}
+
+// ── FILTRAR POR PERÍODO ───────────────────────────────────────────
+function filtrarPedidos() {
+  if (periodoActivo === 0) return todosLosPedidos;
+  const desde = new Date();
+  desde.setDate(desde.getDate() - periodoActivo);
+  return todosLosPedidos.filter(p => p.fecha && new Date(p.fecha) >= desde);
+}
+
+// ── RENDER DASHBOARD ──────────────────────────────────────────────
+function renderDashboard() {
+  const pedidos = filtrarPedidos();
+  renderMetricas(pedidos);
+  renderGrafica(pedidos);
+  renderTabla(pedidos);
+}
+
+// ── MÉTRICAS ──────────────────────────────────────────────────────
+function renderMetricas(pedidos) {
+  const total    = pedidos.reduce((s, p) => s + (p.total || 0), 0);
+  const ganancia = Math.round(total * margen / 100);
+  const ticket   = pedidos.length ? Math.round(total / pedidos.length) : 0;
+
+  document.getElementById("m-total").textContent    = formatMoney(total);
+  document.getElementById("m-ganancia").textContent = formatMoney(ganancia);
+  document.getElementById("m-pedidos").textContent  = pedidos.length;
+  document.getElementById("m-ticket").textContent   = formatMoney(ticket);
+  document.getElementById("m-ganancia-sub").textContent = `con margen del ${margen}%`;
+}
+
+// ── GRÁFICA ───────────────────────────────────────────────────────
+function renderGrafica(pedidos) {
+  const diasMostrar = periodoActivo === 0 ? 30 : periodoActivo;
+  const labels = [];
+  const totales = [];
+
+  for (let i = diasMostrar - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().split("T")[0];
+    labels.push(d.toLocaleDateString("es-MX", { day: "numeric", month: "short" }));
+    const suma = pedidos
+      .filter(p => p.fecha === key)
+      .reduce((s, p) => s + (p.total || 0), 0);
+    totales.push(suma);
+  }
+
+  const ctx = document.getElementById("sales-chart").getContext("2d");
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Ventas ($)",
+        data: totales,
+        backgroundColor: totales.map(v => v > 0 ? "rgba(200,134,10,0.7)" : "rgba(200,134,10,0.15)"),
+        borderColor: "rgba(200,134,10,0.9)",
+        borderWidth: 1,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+        y: {
+          grid: { color: "rgba(0,0,0,0.05)" },
+          ticks: {
+            font: { size: 10 },
+            callback: v => v === 0 ? "" : "$" + v.toLocaleString("es-MX")
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── TABLA ─────────────────────────────────────────────────────────
+function renderTabla(pedidos) {
+  const container = document.getElementById("orders-container");
+  if (!pedidos.length) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><p>Sin pedidos en este período</p></div>`;
+    return;
+  }
+
+  const rows = pedidos.map(p => {
+    const ganancia  = Math.round((p.total || 0) * margen / 100);
+    const statusKey = (p.estatus || "Nuevo").replace(/\s+/g, "-");
+    const fecha     = p.fecha ? new Date(p.fecha + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
+    return `
+      <tr>
+        <td>${fecha}</td>
+        <td><strong>${p.cliente || "—"}</strong><br><span style="color:var(--ink-muted);font-size:11px">${p.telefono || ""}</span></td>
+        <td style="max-width:200px;color:var(--ink-soft)">${p.productos || "—"}</td>
+        <td class="td-total">${formatMoney(p.total)}</td>
+        <td class="td-ganancia">${formatMoney(ganancia)}</td>
+        <td><span class="status-badge status-${statusKey}">${p.estatus || "Nuevo"}</span></td>
+      </tr>`;
+  }).join("");
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th>Productos</th>
+          <th>Total</th>
+          <th>Ganancia est.</th>
+          <th>Estatus</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────
+function formatMoney(n) {
+  return "$" + Math.round(n || 0).toLocaleString("es-MX");
+}
+</script>
+</body>
+</html>
