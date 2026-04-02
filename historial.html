@@ -492,27 +492,28 @@ function filtrarPedidos() {
 // Calcula ganancia de un pedido usando costos reales del JSON
 function calcularGanancia(pedido) {
   const total = pedido.total || 0;
-  if (!pedido.productos) return { ganancia: Math.round(total * margen / 100), pct: margen };
 
-  // Intentar matchear productos por nombre
-  const items = pedido.productos.split(",").map(s => s.trim());
-  let costoTotal = 0; let itemsConCosto = 0;
-  items.forEach(item => {
-    const match = item.match(/^(.+?)\s*x(\d+)$/);
-    if (!match) return;
-    const nombre = match[1].trim();
-    const qty    = parseInt(match[2]);
-    const prod   = productos.find(p => `${p.brand} ${p.name}`.toLowerCase().includes(nombre.toLowerCase())
-                                    || nombre.toLowerCase().includes(p.name.toLowerCase()));
-    if (prod?.costo) { costoTotal += prod.costo * qty; itemsConCosto++; }
-  });
-
-  if (itemsConCosto === 0) {
-    return { ganancia: Math.round(total * margen / 100), pct: margen };
+  // Opción 1: usar items estructurados con ID (pedidos nuevos)
+  if (pedido.itemsJSON) {
+    try {
+      const items = JSON.parse(pedido.itemsJSON);
+      let costoTotal = 0; let itemsConCosto = 0;
+      items.forEach(item => {
+        // Buscar costo en products.json por ID exacto
+        const prod = productos.find(p => p.id == item.id);
+        const costo = prod?.costo || item.costo || 0;
+        if (costo) { costoTotal += costo * item.qty; itemsConCosto++; }
+      });
+      if (itemsConCosto > 0) {
+        const ganancia = Math.round(total - costoTotal);
+        const pct      = total > 0 ? Math.round((ganancia / total) * 100) : 0;
+        return { ganancia, pct, preciso: true };
+      }
+    } catch(e) {}
   }
-  const ganancia = Math.round(total - costoTotal);
-  const pct      = total > 0 ? Math.round((ganancia / total) * 100) : 0;
-  return { ganancia, pct };
+
+  // Opción 2: fallback con margen global (pedidos viejos sin items estructurados)
+  return { ganancia: Math.round(total * margen / 100), pct: margen, preciso: false };
 }
 
 function renderDashboard() {
@@ -585,7 +586,8 @@ function renderTabla(pedidos) {
   }
 
   const rows = pedidos.map(p => {
-    const { ganancia, pct } = calcularGanancia(p);
+    const info = calcularGanancia(p);
+    const { ganancia, pct } = info;
     const estatus    = p.estatus || "Nuevo";
     const statusKey  = estatus.replace(/\s+/g, "-");
     const fecha      = p.fecha ? new Date(p.fecha + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
@@ -601,7 +603,7 @@ function renderTabla(pedidos) {
         <td class="td-total">${formatMoney(p.total)}</td>
         <td>
           <div class="td-ganancia">${formatMoney(ganancia)}</div>
-          <div class="td-pct">${pct}% margen</div>
+          <div class="td-pct">${pct}% ${info.preciso ? '✓ real' : '~ estimado'}</div>
         </td>
         <td><span class="status-badge status-${statusKey}" id="badge-${p.id}">${estatus}</span></td>
         <td>
@@ -742,13 +744,20 @@ function renderClienteCard(c, umbralPedidos, umbralMonto) {
   const mListo  = premioMontoListo(c, umbralMonto);
   const listo   = pListo || mListo;
 
-  // Progreso pedidos
-  const pedidosCiclo  = c.totalPedidos % umbralPedidos || (listo ? umbralPedidos : 0);
-  const pctPedidos    = Math.min(100, Math.round((pedidosCiclo / umbralPedidos) * 100));
+  // Progreso pedidos — ciclo actual desde el último premio
+  const pedidosGanados = Math.floor(c.totalPedidos / umbralPedidos);
+  const pedidosCiclo   = pListo
+    ? umbralPedidos
+    : c.totalPedidos - (pedidosGanados * umbralPedidos);
+  const pctPedidos     = Math.min(100, Math.round((pedidosCiclo / umbralPedidos) * 100));
 
-  // Progreso monto
-  const montoCiclo    = c.totalCompras % umbralMonto || (mListo ? umbralMonto : 0);
-  const pctMonto      = Math.min(100, Math.round((montoCiclo / umbralMonto) * 100));
+  // Progreso monto — ciclo actual desde el último premio por monto
+  const ciclosGanados  = Math.floor(c.totalCompras / umbralMonto);
+  const ciclosCanjeados = c.canjesRecibidos || 0;
+  const montoCiclo     = mListo
+    ? umbralMonto
+    : c.totalCompras - (ciclosGanados * umbralMonto);
+  const pctMonto       = Math.min(100, Math.round((montoCiclo / umbralMonto) * 100));
 
   const cerca = (pctPedidos >= 70 || pctMonto >= 70) && !listo;
   const initials = c.nombre.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
@@ -802,7 +811,11 @@ function renderClienteCard(c, umbralPedidos, umbralMonto) {
         </div>
       </div>
 
-      ${c.canjesRecibidos ? `<div class="cc-canjes">Última nota: <strong>${c.notasCanje?.split("\n").pop() || "—"}</strong></div>` : ""}
+      <div class="cc-canjes">
+    Premios ganados: <strong>${Math.floor(c.totalPedidos / umbralPedidos) + Math.floor(c.totalCompras / umbralMonto)}</strong>
+    &nbsp;·&nbsp; Canjeados: <strong>${c.canjesRecibidos || 0}</strong>
+    ${c.notasCanje ? `<br>Último: ${c.notasCanje.split("\n").pop()}` : ""}
+  </div>
       <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px">Última compra: ${ultimaFecha}</div>
 
       <div class="cc-actions">
