@@ -1,0 +1,10 @@
+.title-footer {
+  font-family: var(--font-heading-family);
+  font-size: 24px;
+  line-height: var(--font-body-line-height);
+  font-weight: var(--font-heading-weight);
+  color: var(--color-base);
+  --font-heading-line-height: 130%;
+  line-height: var(--font-heading-line-height);
+  word-break: break-word;
+}
