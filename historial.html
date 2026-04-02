@@ -58,6 +58,111 @@
       75%      { transform: translateX(8px); }
     }
 
+
+    /* ── FIDELIDAD ───────────────────────────────────────────────── */
+    .loyalty-config {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      background: #F0EDE8; border-radius: 12px; padding: 0.9rem 1.25rem;
+      margin-bottom: 1rem; font-size: 13px;
+    }
+    .lc-group { display: flex; align-items: center; gap: 8px; }
+    .lc-label { font-weight: 600; color: var(--ink-soft); }
+    .lc-input {
+      width: 72px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
+      padding: 5px 8px; font-size: 13px; font-weight: 700; text-align: center;
+      background: white; color: var(--ink); outline: none; font-family: 'Fraunces', serif;
+    }
+    .lc-input:focus { border-color: var(--gold); }
+
+    .client-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; padding: 1.25rem; }
+    .client-card {
+      background: var(--white); border-radius: 14px;
+      border: 1.5px solid var(--cream-dark); padding: 1rem 1.1rem;
+      transition: box-shadow 0.2s;
+    }
+    .client-card.premio-listo { border-color: var(--gold-mid); background: var(--gold-light); }
+    .client-card.premio-cerca { border-color: #F0C040; }
+
+    .cc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .cc-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: var(--ink);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-weight: 900; font-size: 15px; flex-shrink: 0;
+    }
+    .client-card.premio-listo .cc-avatar { background: var(--gold); }
+    .cc-name { font-weight: 700; font-size: 14px; line-height: 1.2; }
+    .cc-phone { font-size: 11px; color: var(--ink-muted); }
+    .cc-prize-badge {
+      margin-left: auto; background: var(--gold); color: white;
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .cc-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+    .cc-stat { background: var(--cream); border-radius: 8px; padding: 6px 8px; text-align: center; }
+    .cc-stat-val { font-family: 'Fraunces', serif; font-weight: 900; font-size: 15px; }
+    .cc-stat-lbl { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; color: var(--ink-muted); margin-top: 1px; }
+
+    .cc-progress { margin-bottom: 10px; }
+    .cc-progress-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-muted); margin-bottom: 4px; }
+    .progress-bar-wrap { background: var(--cream-dark); border-radius: 100px; height: 7px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 100px; background: var(--gold); transition: width 0.4s; }
+    .progress-bar-fill.green { background: var(--green); }
+
+    .cc-canjes { font-size: 11px; color: var(--ink-muted); margin-bottom: 8px; }
+    .cc-canjes strong { color: var(--ink); }
+
+    .cc-actions { display: flex; gap: 6px; }
+    .cc-btn-prize {
+      flex: 1; background: var(--gold); color: white; border: none;
+      border-radius: 8px; padding: 7px; font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .cc-btn-prize:hover { background: #a56e08; }
+    .cc-btn-prize:disabled { background: var(--cream-dark); color: var(--ink-muted); cursor: not-allowed; }
+    .cc-btn-wa {
+      background: #25D366; color: white; border: none;
+      border-radius: 8px; padding: 7px 10px; font-size: 14px;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .cc-btn-wa:hover { background: #1db954; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(26,18,8,0.5);
+      z-index: 500; display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: white; border-radius: 20px; padding: 1.75rem;
+      width: 100%; max-width: 380px;
+      transform: translateY(10px); transition: transform 0.2s;
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+    .modal-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 900; margin-bottom: 0.25rem; }
+    .modal-sub { font-size: 13px; color: var(--ink-muted); margin-bottom: 1.25rem; }
+    .modal-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; display: block; }
+    .modal-select, .modal-input {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1.5px solid var(--cream-dark); font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif; color: var(--ink);
+      background: var(--cream); outline: none; margin-bottom: 12px;
+    }
+    .modal-select:focus, .modal-input:focus { border-color: var(--gold); }
+    .modal-actions { display: flex; gap: 8px; margin-top: 4px; }
+    .modal-btn-confirm {
+      flex: 1; background: var(--gold); color: white; border: none;
+      border-radius: 10px; padding: 11px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .modal-btn-cancel {
+      background: var(--cream); color: var(--ink-soft); border: none;
+      border-radius: 10px; padding: 11px 16px; font-size: 14px;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
     header {
@@ -272,6 +377,54 @@
   </div>
 </div>
 
+  <!-- ── FIDELIDAD ─────────────────────────────────────────────── -->
+  <div class="table-card" style="margin-top:0">
+    <div class="table-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div class="card-title">🎁 Programa de beneficios</div>
+      <button onclick="cargarClientes()" style="background:var(--cream);border:1.5px solid var(--cream-dark);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">↻ Actualizar</button>
+    </div>
+
+    <!-- Configuración de umbrales -->
+    <div class="loyalty-config">
+      <div class="lc-group">
+        <span class="lc-label">🏆 Premio cada</span>
+        <input class="lc-input" type="number" id="umbral-pedidos" value="5" min="1" max="99" />
+        <span style="font-size:13px;color:var(--ink-soft)">pedidos</span>
+      </div>
+      <div class="lc-group">
+        <span class="lc-label">💰 Premio cada</span>
+        <input class="lc-input" type="number" id="umbral-monto" value="1000" min="100" step="100" style="width:90px" />
+        <span style="font-size:13px;color:var(--ink-soft)">pesos acumulados</span>
+      </div>
+    </div>
+
+    <div id="clientes-container">
+      <div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>
+    </div>
+  </div>
+
+  <!-- Modal para registrar premio -->
+  <div class="modal-overlay" id="prize-modal">
+    <div class="modal-box">
+      <div class="modal-title">🎁 Registrar premio</div>
+      <div class="modal-sub" id="modal-cliente-nombre">Cliente</div>
+      <label class="modal-label">Tipo de premio</label>
+      <select class="modal-select" id="modal-tipo-premio">
+        <option value="Producto gratis">🎁 Producto gratis</option>
+        <option value="Snack sorpresa">⭐ Snack o regalo sorpresa</option>
+        <option value="Descuento 10%">💸 Descuento 10% próxima compra</option>
+        <option value="Descuento 15%">💸 Descuento 15% próxima compra</option>
+        <option value="Descuento 20%">💸 Descuento 20% próxima compra</option>
+      </select>
+      <label class="modal-label">Nota adicional (opcional)</label>
+      <input class="modal-input" type="text" id="modal-nota" placeholder="Ej: Royal Canin 3kg gratis" />
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        <button class="modal-btn-confirm" onclick="confirmarPremio()">✓ Marcar como entregado</button>
+      </div>
+    </div>
+  </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -290,7 +443,7 @@ const NEXT_BTN  = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await Promise.all([cargarProductos(), cargarPedidos()]);
+  await Promise.all([cargarProductos(), cargarPedidos(), cargarClientes()]);
 
   document.querySelectorAll(".period-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -525,6 +678,202 @@ function showToast(msg) {
   t.textContent = msg; t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2500);
 }
+
+
+// ── FIDELIDAD ─────────────────────────────────────────────────────
+let todosLosClientes  = [];
+let clienteModalActual = null;
+
+async function cargarClientes() {
+  document.getElementById("clientes-container").innerHTML =
+    '<div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>';
+  try {
+    const res  = await fetch("/.netlify/functions/get-customers");
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    todosLosClientes = data.clientes;
+    renderClientes();
+  } catch (err) {
+    document.getElementById("clientes-container").innerHTML =
+      `<div class="empty"><div class="empty-icon">⚠️</div><p>Error: ${err.message}</p></div>`;
+  }
+}
+
+function renderClientes() {
+  const umbralPedidos = parseInt(document.getElementById("umbral-pedidos").value) || 5;
+  const umbralMonto   = parseInt(document.getElementById("umbral-monto").value)   || 1000;
+  const container     = document.getElementById("clientes-container");
+
+  if (!todosLosClientes.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Sin clientes registrados aún</p></div>';
+    return;
+  }
+
+  // Ordenar: primero los que tienen premio listo
+  const sorted = [...todosLosClientes].sort((a, b) => {
+    const aListo = premioPedidosListo(a, umbralPedidos) || premioMontoListo(a, umbralMonto);
+    const bListo = premioPedidosListo(b, umbralPedidos) || premioMontoListo(b, umbralMonto);
+    if (aListo && !bListo) return -1;
+    if (!aListo && bListo) return 1;
+    return b.totalCompras - a.totalCompras;
+  });
+
+  container.innerHTML = `<div class="client-grid">${sorted.map(c => renderClienteCard(c, umbralPedidos, umbralMonto)).join("")}</div>`;
+
+  // Listeners para inputs de umbral
+  ["umbral-pedidos","umbral-monto"].forEach(id => {
+    document.getElementById(id).addEventListener("input", renderClientes);
+  });
+}
+
+function premioPedidosListo(c, umbral) {
+  const ciclo = c.totalPedidos % umbral;
+  return ciclo === 0 && c.totalPedidos > 0;
+}
+
+function premioMontoListo(c, umbral) {
+  const ciclos       = Math.floor(c.totalCompras / umbral);
+  const ciclosCanjeados = c.canjesRecibidos || 0;
+  return ciclos > ciclosCanjeados;
+}
+
+function renderClienteCard(c, umbralPedidos, umbralMonto) {
+  const pListo  = premioPedidosListo(c, umbralPedidos);
+  const mListo  = premioMontoListo(c, umbralMonto);
+  const listo   = pListo || mListo;
+
+  // Progreso pedidos
+  const pedidosCiclo  = c.totalPedidos % umbralPedidos || (listo ? umbralPedidos : 0);
+  const pctPedidos    = Math.min(100, Math.round((pedidosCiclo / umbralPedidos) * 100));
+
+  // Progreso monto
+  const montoCiclo    = c.totalCompras % umbralMonto || (mListo ? umbralMonto : 0);
+  const pctMonto      = Math.min(100, Math.round((montoCiclo / umbralMonto) * 100));
+
+  const cerca = (pctPedidos >= 70 || pctMonto >= 70) && !listo;
+  const initials = c.nombre.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+  const ultimaFecha = c.ultimaCompra
+    ? new Date(c.ultimaCompra + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short" })
+    : "—";
+
+  return `
+    <div class="client-card ${listo ? 'premio-listo' : cerca ? 'premio-cerca' : ''}">
+      <div class="cc-header">
+        <div class="cc-avatar">${initials}</div>
+        <div>
+          <div class="cc-name">${c.nombre}</div>
+          <div class="cc-phone">${c.telefono || "Sin teléfono"}</div>
+        </div>
+        ${listo ? '<span class="cc-prize-badge">🎁 Premio listo</span>' : ''}
+      </div>
+
+      <div class="cc-stats">
+        <div class="cc-stat">
+          <div class="cc-stat-val">${c.totalPedidos}</div>
+          <div class="cc-stat-lbl">Pedidos</div>
+        </div>
+        <div class="cc-stat">
+          <div class="cc-stat-val">${formatMoney(c.totalCompras)}</div>
+          <div class="cc-stat-lbl">Acumulado</div>
+        </div>
+        <div class="cc-stat">
+          <div class="cc-stat-val" style="color:var(--green)">${c.canjesRecibidos || 0}</div>
+          <div class="cc-stat-lbl">Premios</div>
+        </div>
+      </div>
+
+      <div class="cc-progress">
+        <div class="cc-progress-labels">
+          <span>Pedidos ${pedidosCiclo}/${umbralPedidos}</span>
+          <span>${pctPedidos}%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill ${pListo ? 'green' : ''}" style="width:${pctPedidos}%"></div>
+        </div>
+      </div>
+
+      <div class="cc-progress">
+        <div class="cc-progress-labels">
+          <span>Monto $${montoCiclo.toLocaleString("es-MX")}/$${umbralMonto.toLocaleString("es-MX")}</span>
+          <span>${pctMonto}%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill ${mListo ? 'green' : ''}" style="width:${pctMonto}%"></div>
+        </div>
+      </div>
+
+      ${c.canjesRecibidos ? `<div class="cc-canjes">Última nota: <strong>${c.notasCanje?.split("\n").pop() || "—"}</strong></div>` : ""}
+      <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px">Última compra: ${ultimaFecha}</div>
+
+      <div class="cc-actions">
+        <button class="cc-btn-prize" ${!listo ? 'disabled' : ''}
+          onclick="abrirModal(${JSON.stringify(c).replace(/"/g, '&quot;')})">
+          🎁 Registrar premio
+        </button>
+        ${c.telefono ? `<button class="cc-btn-wa" onclick="contactarCliente('${c.telefono}','${c.nombre}')" title="WhatsApp">💬</button>` : ''}
+      </div>
+    </div>`;
+}
+
+function abrirModal(cliente) {
+  clienteModalActual = cliente;
+  document.getElementById("modal-cliente-nombre").textContent = `Para: ${cliente.nombre}`;
+  document.getElementById("modal-nota").value = "";
+  const modal = document.getElementById("prize-modal");
+  modal.classList.add("open");
+}
+
+function cerrarModal() {
+  document.getElementById("prize-modal").classList.remove("open");
+  clienteModalActual = null;
+}
+
+async function confirmarPremio() {
+  if (!clienteModalActual) return;
+  const tipo  = document.getElementById("modal-tipo-premio").value;
+  const nota  = document.getElementById("modal-nota").value.trim();
+  const premio = nota ? `${tipo} — ${nota}` : tipo;
+
+  const btnConfirm = document.querySelector(".modal-btn-confirm");
+  btnConfirm.disabled    = true;
+  btnConfirm.textContent = "Guardando...";
+
+  try {
+    const res = await fetch("/.netlify/functions/register-prize", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre:  clienteModalActual.nombre,
+        telefono: clienteModalActual.telefono,
+        premio,
+        pageId:  clienteModalActual.canjePageId || null
+      })
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error("Error al guardar");
+
+    cerrarModal();
+    showToast(`🎁 Premio registrado para ${clienteModalActual.nombre}`);
+    await cargarClientes();
+  } catch (err) {
+    showToast("⚠️ Error al registrar, intenta de nuevo");
+  } finally {
+    btnConfirm.disabled    = false;
+    btnConfirm.textContent = "✓ Marcar como entregado";
+  }
+}
+
+function contactarCliente(telefono, nombre) {
+  const tel = telefono.replace(/\D/g, "");
+  const num = tel.startsWith("52") ? tel : `52${tel}`;
+  const msg = `¡Hola ${nombre}! 🐾 Te escribimos de Toby's Crew. ¡Tienes un premio disponible por tu fidelidad! Contáctanos para reclamarlo.`;
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// Cerrar modal al hacer clic fuera
+document.addEventListener("click", e => {
+  if (e.target.id === "prize-modal") cerrarModal();
+});
 
 // ── CONTRASEÑA ────────────────────────────────────────────────────
 const PASSWORD = "tobyscrew2024";   // ← Cambia esto por tu contraseña
