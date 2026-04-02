@@ -278,6 +278,20 @@ function sendOrder() {
   console.log({ nombre: name, telefono: phone, direccion: address, notas: notes, items: items.map(i => ({ producto: i.product.name, cantidad: i.qty, subtotal: i.product.price * i.qty })), total: cartTotal() });
   console.log("──────────────────────────────────────────────");
 
+  // Vamos a guardar en notion
+  fetch("/.netlify/functions/save-order", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    nombre:    name,
+    telefono:  phone,
+    direccion: address,
+    productos: items.map(i => `${i.product.name} x${i.qty}`).join(", "),
+    total:     cartTotal()
+    })
+  }).catch(err => console.error("Error guardando pedido:", err));
+
+
   // Open WhatsApp
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
