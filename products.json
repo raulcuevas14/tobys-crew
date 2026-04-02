@@ -152,7 +152,7 @@
     "price": 1500,
     "costo": 1350,
     "category": "perro",
-    "image": "images/proplan-cachorro-rmg.jpg",
+    "image": "images/maka-adulto2.jpg",
     "descuento": { "activo": true, "tipo": "porcentaje", "valor": 5 }
   },
   {
