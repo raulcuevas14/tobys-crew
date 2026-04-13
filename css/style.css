@@ -421,3 +421,12 @@ button { cursor: pointer; font-family: inherit; }
 }
 .promo-banner.visible { display: block; }
 .promo-banner em { font-style: normal; font-weight: 800; }
+
+/* ─── BADGE DE PUNTOS EN CATÁLOGO ────────────────────────────── */
+.pts-badge {
+  position: absolute; bottom: 8px; right: 8px;
+  background: var(--ink); color: var(--gold-mid);
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 100px;
+  letter-spacing: 0.3px; z-index: 2;
+}

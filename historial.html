@@ -59,109 +59,78 @@
     }
 
 
-    /* ── FIDELIDAD ───────────────────────────────────────────────── */
-    .loyalty-config {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-      background: #F0EDE8; border-radius: 12px; padding: 0.9rem 1.25rem;
-      margin-bottom: 1rem; font-size: 13px;
-    }
-    .lc-group { display: flex; align-items: center; gap: 8px; }
-    .lc-label { font-weight: 600; color: var(--ink-soft); }
-    .lc-input {
-      width: 72px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
-      padding: 5px 8px; font-size: 13px; font-weight: 700; text-align: center;
-      background: white; color: var(--ink); outline: none; font-family: 'Fraunces', serif;
-    }
-    .lc-input:focus { border-color: var(--gold); }
+    /* ── FIDELIDAD — SISTEMA DE PUNTOS ──────────────────────────── */
+    /* Premios configurables */
+    .premios-catalogo { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; padding: 1.25rem; }
+    .premio-card { background: var(--white); border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 12px; text-align: center; }
+    .premio-card-icon { font-size: 26px; margin-bottom: 4px; }
+    .premio-card-nombre { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .premio-card-pts { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 900; color: var(--gold); }
+    .premio-card-lbl { font-size: 10px; color: var(--ink-muted); }
+
+    .loyalty-tabs { display: flex; gap: 0; border-bottom: 1.5px solid var(--cream-dark); margin-bottom: 1rem; padding: 0 1.25rem; }
+    .loyalty-tab { padding: 9px 18px; font-size: 13px; font-weight: 600; border: none; background: none; cursor: pointer; color: var(--ink-muted); border-bottom: 2px solid transparent; margin-bottom: -1.5px; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s; }
+    .loyalty-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
 
     .client-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; padding: 1.25rem; }
-    .client-card {
-      background: var(--white); border-radius: 14px;
-      border: 1.5px solid var(--cream-dark); padding: 1rem 1.1rem;
-      transition: box-shadow 0.2s;
-    }
+    .client-card { background: var(--white); border-radius: 14px; border: 1.5px solid var(--cream-dark); padding: 1rem 1.1rem; transition: box-shadow 0.2s; }
     .client-card.premio-listo { border-color: var(--gold-mid); background: var(--gold-light); }
     .client-card.premio-cerca { border-color: #F0C040; }
 
     .cc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .cc-avatar {
-      width: 38px; height: 38px; border-radius: 50%; background: var(--ink);
-      color: white; display: flex; align-items: center; justify-content: center;
-      font-family: 'Fraunces', serif; font-weight: 900; font-size: 15px; flex-shrink: 0;
-    }
+    .cc-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--ink); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 900; font-size: 15px; flex-shrink: 0; }
     .client-card.premio-listo .cc-avatar { background: var(--gold); }
     .cc-name { font-weight: 700; font-size: 14px; line-height: 1.2; }
     .cc-phone { font-size: 11px; color: var(--ink-muted); }
-    .cc-prize-badge {
-      margin-left: auto; background: var(--gold); color: white;
-      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 100px;
-      white-space: nowrap;
-    }
+    .cc-prize-badge { margin-left: auto; background: var(--gold); color: white; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
+
+    /* Bloque de puntos */
+    .cc-puntos-block { background: var(--ink); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .cc-puntos-num { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 900; color: var(--gold-mid); line-height: 1; }
+    .cc-puntos-lbl { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .cc-puntos-right { text-align: right; font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.7; }
 
     .cc-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
     .cc-stat { background: var(--cream); border-radius: 8px; padding: 6px 8px; text-align: center; }
     .cc-stat-val { font-family: 'Fraunces', serif; font-weight: 900; font-size: 15px; }
     .cc-stat-lbl { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; color: var(--ink-muted); margin-top: 1px; }
 
-    .cc-progress { margin-bottom: 10px; }
-    .cc-progress-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-muted); margin-bottom: 4px; }
-    .progress-bar-wrap { background: var(--cream-dark); border-radius: 100px; height: 7px; overflow: hidden; }
+    .cc-progress { margin-bottom: 8px; }
+    .cc-progress-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-muted); margin-bottom: 3px; }
+    .progress-bar-wrap { background: var(--cream-dark); border-radius: 100px; height: 6px; overflow: hidden; }
     .progress-bar-fill { height: 100%; border-radius: 100px; background: var(--gold); transition: width 0.4s; }
     .progress-bar-fill.green { background: var(--green); }
 
-    .cc-canjes { font-size: 11px; color: var(--ink-muted); margin-bottom: 8px; }
-    .cc-canjes strong { color: var(--ink); }
-
-    .cc-actions { display: flex; gap: 6px; }
-    .cc-btn-prize {
-      flex: 1; background: var(--gold); color: white; border: none;
-      border-radius: 8px; padding: 7px; font-size: 12px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: background 0.15s;
-    }
+    .cc-actions { display: flex; gap: 6px; margin-top: 10px; }
+    .cc-btn-prize { flex: 1; background: var(--gold); color: white; border: none; border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s; }
     .cc-btn-prize:hover { background: #a56e08; }
     .cc-btn-prize:disabled { background: var(--cream-dark); color: var(--ink-muted); cursor: not-allowed; }
-    .cc-btn-wa {
-      background: #25D366; color: white; border: none;
-      border-radius: 8px; padding: 7px 10px; font-size: 14px;
-      cursor: pointer; transition: background 0.15s;
-    }
+    .cc-btn-wa { background: #25D366; color: white; border: none; border-radius: 8px; padding: 8px 10px; font-size: 14px; cursor: pointer; transition: background 0.15s; }
     .cc-btn-wa:hover { background: #1db954; }
 
-    /* Modal */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(26,18,8,0.5);
-      z-index: 500; display: flex; align-items: center; justify-content: center;
-      padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
+    /* Modal de canje */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(26,18,8,0.5); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: white; border-radius: 20px; padding: 1.75rem;
-      width: 100%; max-width: 380px;
-      transform: translateY(10px); transition: transform 0.2s;
-    }
+    .modal-box { background: white; border-radius: 20px; padding: 1.75rem; width: 100%; max-width: 400px; transform: translateY(10px); transition: transform 0.2s; }
     .modal-overlay.open .modal-box { transform: translateY(0); }
     .modal-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 900; margin-bottom: 0.25rem; }
-    .modal-sub { font-size: 13px; color: var(--ink-muted); margin-bottom: 1.25rem; }
+    .modal-sub { font-size: 13px; color: var(--ink-muted); margin-bottom: 1rem; }
+    .modal-puntos-blk { background: var(--ink); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .modal-puntos-val { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900; color: var(--gold-mid); }
+    .modal-puntos-lbl { font-size: 10px; color: rgba(255,255,255,0.4); }
     .modal-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; display: block; }
-    .modal-select, .modal-input {
-      width: 100%; padding: 10px 12px; border-radius: 10px;
-      border: 1.5px solid var(--cream-dark); font-size: 14px;
-      font-family: 'Plus Jakarta Sans', sans-serif; color: var(--ink);
-      background: var(--cream); outline: none; margin-bottom: 12px;
-    }
-    .modal-select:focus, .modal-input:focus { border-color: var(--gold); }
+    .premios-lista { display: grid; gap: 7px; margin-bottom: 12px; }
+    .premio-opt { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border: 1.5px solid var(--cream-dark); border-radius: 10px; cursor: pointer; transition: all 0.15s; background: var(--cream); }
+    .premio-opt:hover:not(.disabled) { border-color: var(--gold); }
+    .premio-opt.selected { border-color: var(--gold); background: var(--gold-light); }
+    .premio-opt.disabled { opacity: 0.4; cursor: not-allowed; }
+    .po-left { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+    .po-icon { font-size: 18px; }
+    .po-pts { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 900; color: var(--gold); white-space: nowrap; }
     .modal-actions { display: flex; gap: 8px; margin-top: 4px; }
-    .modal-btn-confirm {
-      flex: 1; background: var(--gold); color: white; border: none;
-      border-radius: 10px; padding: 11px; font-size: 14px; font-weight: 700;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .modal-btn-cancel {
-      background: var(--cream); color: var(--ink-soft); border: none;
-      border-radius: 10px; padding: 11px 16px; font-size: 14px;
-      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+    .modal-btn-confirm { flex: 1; background: var(--gold); color: white; border: none; border-radius: 10px; padding: 11px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .modal-btn-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
+    .modal-btn-cancel { background: var(--cream); color: var(--ink-soft); border: none; border-radius: 10px; padding: 11px 16px; font-size: 14px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
 
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
@@ -377,54 +346,50 @@
   </div>
 </div>
 
-  <!-- ── FIDELIDAD ─────────────────────────────────────────────── -->
-  <div class="table-card" style="margin-top:0">
-    <div class="table-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+
+  <!-- ── FIDELIDAD — SISTEMA DE PUNTOS ──────────────────────── -->
+  <div class="table-card" style="margin-top:1.5rem">
+    <div class="table-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:1rem 1.25rem;border-bottom:1px solid var(--cream-dark)">
       <div class="card-title">🎁 Programa de beneficios</div>
       <button onclick="cargarClientes()" style="background:var(--cream);border:1.5px solid var(--cream-dark);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">↻ Actualizar</button>
     </div>
 
-    <!-- Configuración de umbrales -->
-    <div class="loyalty-config">
-      <div class="lc-group">
-        <span class="lc-label">🏆 Premio cada</span>
-        <input class="lc-input" type="number" id="umbral-pedidos" value="5" min="1" max="99" />
-        <span style="font-size:13px;color:var(--ink-soft)">pedidos</span>
-      </div>
-      <div class="lc-group">
-        <span class="lc-label">💰 Premio cada</span>
-        <input class="lc-input" type="number" id="umbral-monto" value="1000" min="100" step="100" style="width:90px" />
-        <span style="font-size:13px;color:var(--ink-soft)">pesos acumulados</span>
-      </div>
+    <div class="loyalty-tabs">
+      <button class="loyalty-tab active" onclick="switchLoyaltyTab('clientes', this)">👥 Clientes</button>
+      <button class="loyalty-tab" onclick="switchLoyaltyTab('premios', this)">🏆 Catálogo de premios</button>
     </div>
 
-    <div id="clientes-container">
-      <div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>
+    <div id="loyalty-tab-premios" style="display:none">
+      <div class="premios-catalogo" id="premios-catalogo-grid"></div>
+    </div>
+
+    <div id="loyalty-tab-clientes">
+      <div id="clientes-container">
+        <div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>
+      </div>
     </div>
   </div>
 
-  <!-- Modal para registrar premio -->
+  <!-- Modal de canje por puntos -->
   <div class="modal-overlay" id="prize-modal">
     <div class="modal-box">
-      <div class="modal-title">🎁 Registrar premio</div>
+      <div class="modal-title">🎁 Canjear puntos</div>
       <div class="modal-sub" id="modal-cliente-nombre">Cliente</div>
-      <label class="modal-label">Tipo de premio</label>
-      <select class="modal-select" id="modal-tipo-premio">
-        <option value="Producto gratis">🎁 Producto gratis</option>
-        <option value="Snack sorpresa">⭐ Snack o regalo sorpresa</option>
-        <option value="Descuento 10%">💸 Descuento 10% próxima compra</option>
-        <option value="Descuento 15%">💸 Descuento 15% próxima compra</option>
-        <option value="Descuento 20%">💸 Descuento 20% próxima compra</option>
-      </select>
-      <label class="modal-label">Nota adicional (opcional)</label>
-      <input class="modal-input" type="text" id="modal-nota" placeholder="Ej: Royal Canin 3kg gratis" />
+      <div class="modal-puntos-blk">
+        <div>
+          <div class="modal-puntos-val" id="modal-puntos-val">0</div>
+          <div class="modal-puntos-lbl">puntos disponibles</div>
+        </div>
+        <span style="font-size:24px">🐾</span>
+      </div>
+      <label class="modal-label">Selecciona el premio</label>
+      <div class="premios-lista" id="modal-premios-lista"></div>
       <div class="modal-actions">
         <button class="modal-btn-cancel" onclick="cerrarModal()">Cancelar</button>
-        <button class="modal-btn-confirm" onclick="confirmarPremio()">✓ Marcar como entregado</button>
+        <button class="modal-btn-confirm" id="modal-confirm-btn" onclick="confirmarPremio()" disabled>Confirmar canje</button>
       </div>
     </div>
   </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -682,9 +647,40 @@ function showToast(msg) {
 }
 
 
-// ── FIDELIDAD ─────────────────────────────────────────────────────
-let todosLosClientes  = [];
+// ── FIDELIDAD — SISTEMA DE PUNTOS ────────────────────────────────
+// ══ CONFIGURA TUS PREMIOS AQUÍ ══
+// Para agregar, editar o quitar premios, modifica este arreglo.
+// puntos: cuántos puntos necesita el cliente para canjearlo.
+const PREMIOS = [
+  { id: "snack",    nombre: "Snack sorpresa",          puntos: 150,  icono: "⭐" },
+  { id: "desc50",   nombre: "Descuento $50",            puntos: 300,  icono: "💸" },
+  { id: "prod200",  nombre: "Producto gratis (~$200)",  puntos: 500,  icono: "🎁" },
+  { id: "prod500",  nombre: "Producto gratis (~$500)",  puntos: 1000, icono: "🎁" },
+  { id: "desc10",   nombre: "Descuento 10%",            puntos: 200,  icono: "💸" },
+  { id: "desc15",   nombre: "Descuento 15%",            puntos: 400,  icono: "💸" },
+];
+
+let todosLosClientes   = [];
 let clienteModalActual = null;
+let premioSeleccionado = null;
+
+function switchLoyaltyTab(tab, btn) {
+  document.querySelectorAll(".loyalty-tab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("loyalty-tab-clientes").style.display = tab === "clientes" ? "block" : "none";
+  document.getElementById("loyalty-tab-premios").style.display  = tab === "premios"  ? "block" : "none";
+  if (tab === "premios") renderPremiosCatalogo();
+}
+
+function renderPremiosCatalogo() {
+  document.getElementById("premios-catalogo-grid").innerHTML = PREMIOS.map(p => `
+    <div class="premio-card">
+      <div class="premio-card-icon">${p.icono}</div>
+      <div class="premio-card-nombre">${p.nombre}</div>
+      <div class="premio-card-pts">${p.puntos.toLocaleString("es-MX")}</div>
+      <div class="premio-card-lbl">puntos</div>
+    </div>`).join("");
+}
 
 async function cargarClientes() {
   document.getElementById("clientes-container").innerHTML =
@@ -702,68 +698,42 @@ async function cargarClientes() {
 }
 
 function renderClientes() {
-  const umbralPedidos = parseInt(document.getElementById("umbral-pedidos").value) || 5;
-  const umbralMonto   = parseInt(document.getElementById("umbral-monto").value)   || 1000;
-  const container     = document.getElementById("clientes-container");
-
+  const container = document.getElementById("clientes-container");
   if (!todosLosClientes.length) {
-    container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Sin clientes registrados aún</p></div>';
+    container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Sin clientes aún</p></div>';
     return;
   }
-
-  // Ordenar: primero los que tienen premio listo
+  // Ordenar: primero con más puntos disponibles / premio listo
   const sorted = [...todosLosClientes].sort((a, b) => {
-    const aListo = premioPedidosListo(a, umbralPedidos) || premioMontoListo(a, umbralMonto);
-    const bListo = premioPedidosListo(b, umbralPedidos) || premioMontoListo(b, umbralMonto);
+    const aListo = tienePremioDisponible(a);
+    const bListo = tienePremioDisponible(b);
     if (aListo && !bListo) return -1;
     if (!aListo && bListo) return 1;
-    return b.totalCompras - a.totalCompras;
+    return b.puntosDisponibles - a.puntosDisponibles;
   });
-
-  container.innerHTML = `<div class="client-grid">${sorted.map(c => renderClienteCard(c, umbralPedidos, umbralMonto)).join("")}</div>`;
-
-  // Listeners para inputs de umbral
-  ["umbral-pedidos","umbral-monto"].forEach(id => {
-    document.getElementById(id).addEventListener("input", renderClientes);
-  });
+  container.innerHTML = `<div class="client-grid">${sorted.map(renderClienteCard).join("")}</div>`;
 }
 
-function premioPedidosListo(c, umbral) {
-  const ciclo = c.totalPedidos % umbral;
-  return ciclo === 0 && c.totalPedidos > 0;
+function tienePremioDisponible(c) {
+  const minPts = Math.min(...PREMIOS.map(p => p.puntos));
+  return (c.puntosDisponibles || 0) >= minPts;
 }
 
-function premioMontoListo(c, umbral) {
-  const ciclos       = Math.floor(c.totalCompras / umbral);
-  const ciclosCanjeados = c.canjesRecibidos || 0;
-  return ciclos > ciclosCanjeados;
+function proximoPremio(pts) {
+  return PREMIOS.find(p => p.puntos > pts) || PREMIOS[PREMIOS.length - 1];
 }
 
-function renderClienteCard(c, umbralPedidos, umbralMonto) {
-  const pListo  = premioPedidosListo(c, umbralPedidos);
-  const mListo  = premioMontoListo(c, umbralMonto);
-  const listo   = pListo || mListo;
-
-  // Progreso pedidos — ciclo actual desde el último premio
-  const pedidosGanados = Math.floor(c.totalPedidos / umbralPedidos);
-  const pedidosCiclo   = pListo
-    ? umbralPedidos
-    : c.totalPedidos - (pedidosGanados * umbralPedidos);
-  const pctPedidos     = Math.min(100, Math.round((pedidosCiclo / umbralPedidos) * 100));
-
-  // Progreso monto — ciclo actual desde el último premio por monto
-  const ciclosGanados  = Math.floor(c.totalCompras / umbralMonto);
-  const ciclosCanjeados = c.canjesRecibidos || 0;
-  const montoCiclo     = mListo
-    ? umbralMonto
-    : c.totalCompras - (ciclosGanados * umbralMonto);
-  const pctMonto       = Math.min(100, Math.round((montoCiclo / umbralMonto) * 100));
-
-  const cerca = (pctPedidos >= 70 || pctMonto >= 70) && !listo;
+function renderClienteCard(c) {
+  const listo    = tienePremioDisponible(c);
+  const cerca    = !listo && (c.puntosDisponibles || 0) >= Math.min(...PREMIOS.map(p => p.puntos)) * 0.6;
   const initials = c.nombre.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
-  const ultimaFecha = c.ultimaCompra
+  const fecha    = c.ultimaCompra
     ? new Date(c.ultimaCompra + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short" })
     : "—";
+
+  // Barra de progreso hacia el siguiente premio
+  const siguiente  = proximoPremio(c.puntosDisponibles || 0);
+  const pctPuntos  = Math.min(100, Math.round(((c.puntosDisponibles || 0) / siguiente.puntos) * 100));
 
   return `
     <div class="client-card ${listo ? 'premio-listo' : cerca ? 'premio-cerca' : ''}">
@@ -773,120 +743,128 @@ function renderClienteCard(c, umbralPedidos, umbralMonto) {
           <div class="cc-name">${c.nombre}</div>
           <div class="cc-phone">${c.telefono || "Sin teléfono"}</div>
         </div>
-        ${listo ? '<span class="cc-prize-badge">🎁 Premio listo</span>' : ''}
+        ${listo ? '<span class="cc-prize-badge">⭐ Premio disponible</span>' : ''}
       </div>
 
       <div class="cc-stats">
-        <div class="cc-stat">
-          <div class="cc-stat-val">${c.totalPedidos}</div>
-          <div class="cc-stat-lbl">Pedidos</div>
+        <div class="cc-stat"><div class="cc-stat-val">${c.totalPedidos}</div><div class="cc-stat-lbl">Pedidos</div></div>
+        <div class="cc-stat"><div class="cc-stat-val">${formatMoney(c.totalCompras)}</div><div class="cc-stat-lbl">Acumulado</div></div>
+        <div class="cc-stat"><div class="cc-stat-val" style="color:var(--green)">${c.canjesRecibidos || 0}</div><div class="cc-stat-lbl">Canjes</div></div>
+      </div>
+
+      <!-- Bloque de puntos destacado -->
+      <div class="cc-puntos-block">
+        <div>
+          <div class="cc-puntos-num">${(c.puntosDisponibles || 0).toLocaleString("es-MX")}</div>
+          <div class="cc-puntos-lbl">puntos disponibles</div>
         </div>
-        <div class="cc-stat">
-          <div class="cc-stat-val">${formatMoney(c.totalCompras)}</div>
-          <div class="cc-stat-lbl">Acumulado</div>
-        </div>
-        <div class="cc-stat">
-          <div class="cc-stat-val" style="color:var(--green)">${c.canjesRecibidos || 0}</div>
-          <div class="cc-stat-lbl">Premios</div>
+        <div class="cc-puntos-right">
+          <div>${(c.puntosGanados || 0).toLocaleString("es-MX")} pts ganados</div>
+          <div>${(c.puntosCanjeados || 0).toLocaleString("es-MX")} pts canjeados</div>
         </div>
       </div>
 
+      <!-- Progreso hacia siguiente premio -->
       <div class="cc-progress">
         <div class="cc-progress-labels">
-          <span>Pedidos ${pedidosCiclo}/${umbralPedidos}</span>
-          <span>${pctPedidos}%</span>
+          <span>Siguiente: ${siguiente.icono} ${siguiente.nombre}</span>
+          <span>${pctPuntos}%</span>
         </div>
         <div class="progress-bar-wrap">
-          <div class="progress-bar-fill ${pListo ? 'green' : ''}" style="width:${pctPedidos}%"></div>
+          <div class="progress-bar-fill ${listo ? 'green' : ''}" style="width:${pctPuntos}%"></div>
         </div>
       </div>
 
-      <div class="cc-progress">
-        <div class="cc-progress-labels">
-          <span>Monto $${montoCiclo.toLocaleString("es-MX")}/$${umbralMonto.toLocaleString("es-MX")}</span>
-          <span>${pctMonto}%</span>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill ${mListo ? 'green' : ''}" style="width:${pctMonto}%"></div>
-        </div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px">
+        Última compra: ${fecha}
+        ${c.notasCanje ? ` · Último canje: ${c.notasCanje.split("\n").pop()}` : ""}
       </div>
-
-      <div class="cc-canjes">
-    Premios ganados: <strong>${Math.floor(c.totalPedidos / umbralPedidos) + Math.floor(c.totalCompras / umbralMonto)}</strong>
-    &nbsp;·&nbsp; Canjeados: <strong>${c.canjesRecibidos || 0}</strong>
-    ${c.notasCanje ? `<br>Último: ${c.notasCanje.split("\n").pop()}` : ""}
-  </div>
-      <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px">Última compra: ${ultimaFecha}</div>
 
       <div class="cc-actions">
-        <button class="cc-btn-prize" ${!listo ? 'disabled' : ''}
-          onclick="abrirModal(${JSON.stringify(c).replace(/"/g, '&quot;')})">
-          🎁 Registrar premio
+        <button class="cc-btn-prize" ${!listo ? "disabled" : ""}
+          onclick='abrirModal(${JSON.stringify(c).replace(/'/g, "&#39;")})'>
+          🎁 Canjear puntos
         </button>
-        ${c.telefono ? `<button class="cc-btn-wa" onclick="contactarCliente('${c.telefono}','${c.nombre}')" title="WhatsApp">💬</button>` : ''}
+        ${c.telefono ? `<button class="cc-btn-wa" onclick="notificarCliente('${c.telefono}','${c.nombre}',${c.puntosDisponibles||0})" title="Notificar por WhatsApp">💬</button>` : ""}
       </div>
     </div>`;
 }
 
+// ── MODAL ─────────────────────────────────────────────────────────
 function abrirModal(cliente) {
   clienteModalActual = cliente;
+  premioSeleccionado = null;
   document.getElementById("modal-cliente-nombre").textContent = `Para: ${cliente.nombre}`;
-  document.getElementById("modal-nota").value = "";
-  const modal = document.getElementById("prize-modal");
-  modal.classList.add("open");
+  document.getElementById("modal-puntos-val").textContent     = (cliente.puntosDisponibles || 0).toLocaleString("es-MX");
+  document.getElementById("modal-confirm-btn").disabled       = true;
+
+  document.getElementById("modal-premios-lista").innerHTML = PREMIOS.map(p => {
+    const puede = (cliente.puntosDisponibles || 0) >= p.puntos;
+    return `
+      <div class="premio-opt ${!puede ? 'disabled' : ''}"
+        onclick="${puede ? `seleccionarPremioModal(this,'${p.id}','${p.nombre}',${p.puntos})` : ''}">
+        <div class="po-left"><span class="po-icon">${p.icono}</span>${p.nombre}</div>
+        <span class="po-pts">${p.puntos.toLocaleString("es-MX")} pts</span>
+      </div>`;
+  }).join("");
+
+  document.getElementById("prize-modal").classList.add("open");
+}
+
+function seleccionarPremioModal(el, id, nombre, puntos) {
+  document.querySelectorAll(".premio-opt").forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+  premioSeleccionado = { id, nombre, puntos };
+  document.getElementById("modal-confirm-btn").disabled = false;
 }
 
 function cerrarModal() {
   document.getElementById("prize-modal").classList.remove("open");
-  clienteModalActual = null;
+  clienteModalActual = null; premioSeleccionado = null;
 }
 
 async function confirmarPremio() {
-  if (!clienteModalActual) return;
-  const tipo  = document.getElementById("modal-tipo-premio").value;
-  const nota  = document.getElementById("modal-nota").value.trim();
-  const premio = nota ? `${tipo} — ${nota}` : tipo;
-
-  const btnConfirm = document.querySelector(".modal-btn-confirm");
-  btnConfirm.disabled    = true;
-  btnConfirm.textContent = "Guardando...";
-
+  if (!clienteModalActual || !premioSeleccionado) return;
+  const btn = document.getElementById("modal-confirm-btn");
+  btn.disabled = true; btn.textContent = "Guardando...";
   try {
     const res = await fetch("/.netlify/functions/register-prize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        nombre:  clienteModalActual.nombre,
-        telefono: clienteModalActual.telefono,
-        premio,
-        pageId:  clienteModalActual.canjePageId || null
+        nombre:      clienteModalActual.nombre,
+        telefono:    clienteModalActual.telefono,
+        premio:      premioSeleccionado.nombre,
+        puntosUsados: premioSeleccionado.puntos,
+        pageId:      clienteModalActual.canjePageId || null
       })
     });
     const data = await res.json();
     if (!data.ok) throw new Error("Error al guardar");
-
     cerrarModal();
-    showToast(`🎁 Premio registrado para ${clienteModalActual.nombre}`);
+    showToast(`🎁 Canje: ${premioSeleccionado.nombre} (−${premioSeleccionado.puntos} pts)`);
     await cargarClientes();
   } catch (err) {
     showToast("⚠️ Error al registrar, intenta de nuevo");
   } finally {
-    btnConfirm.disabled    = false;
-    btnConfirm.textContent = "✓ Marcar como entregado";
+    btn.disabled = false; btn.textContent = "Confirmar canje";
   }
 }
 
-function contactarCliente(telefono, nombre) {
+function notificarCliente(telefono, nombre, puntos) {
   const tel = telefono.replace(/\D/g, "");
   const num = tel.startsWith("52") ? tel : `52${tel}`;
-  const msg = `¡Hola ${nombre}! 🐾 Te escribimos de Toby's Crew. ¡Tienes un premio disponible por tu fidelidad! Contáctanos para reclamarlo.`;
+  const disponibles = PREMIOS.filter(p => puntos >= p.puntos).map(p => `• ${p.icono} ${p.nombre} (${p.puntos.toLocaleString("es-MX")} pts)`).join("\n");
+  const msg = disponibles
+    ? `¡Hola ${nombre}! 🐾 Tienes *${puntos.toLocaleString("es-MX")} puntos* en Toby's Crew.\n\nPuedes canjearlos por:\n${disponibles}\n\n¡Contáctanos para reclamar tu premio!`
+    : `¡Hola ${nombre}! 🐾 Tienes *${puntos.toLocaleString("es-MX")} puntos* acumulados en Toby's Crew. ¡Sigue comprando para ganar premios!`;
   window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// Cerrar modal al hacer clic fuera
-document.addEventListener("click", e => {
-  if (e.target.id === "prize-modal") cerrarModal();
-});
+document.addEventListener("click", e => { if (e.target.id === "prize-modal") cerrarModal(); });
+
+// Cargar clientes al iniciar
+cargarClientes();
 
 // ── CONTRASEÑA ────────────────────────────────────────────────────
 const PASSWORD = "tobyscrew2024";   // ← Cambia esto por tu contraseña

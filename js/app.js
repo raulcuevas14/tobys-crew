@@ -1,14 +1,11 @@
 // ── TOBY'S CREW — app.js ──────────────────────────────────────────
-// Configuración: cambia solo estas dos líneas
-const WA_NUMBER   = "524771998610";   // ← Tu número de WhatsApp (con código de país, sin + ni espacios)
-const STORE_NAME  = "Toby's Crew";    // ← Nombre de la tienda
+const WA_NUMBER   = "524771998610";
+const STORE_NAME  = "Toby's Crew";
 
-// ─────────────────────────────────────────────────────────────────
 let products  = [];
-let cart      = {};           // { id: qty }
-let cartStep  = "items";      // "items" | "form"
+let cart      = {};
+let cartStep  = "items";
 
-// ── INIT ──────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
   await loadProducts();
   renderCatalog(products);
@@ -17,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log(`${STORE_NAME} cargado. ${products.length} productos disponibles.`);
 });
 
-// ── PRODUCTS ──────────────────────────────────────────────────────
 async function loadProducts() {
   try {
     const res = await fetch("products.json");
@@ -30,7 +26,6 @@ async function loadProducts() {
   }
 }
 
-// ── DESCUENTOS ────────────────────────────────────────────────────
 function calcularPrecioFinal(p) {
   const d = p.descuento;
   if (!d || !d.activo || !d.valor) return p.price;
@@ -65,30 +60,26 @@ function actualizarBanner() {
   if (banner) banner.classList.toggle("visible", hayOfertas);
 }
 
-// ── CATALOG RENDER ────────────────────────────────────────────────
 function renderCatalog(list) {
   const grid = document.getElementById("catalog-grid");
   if (!list.length) {
     grid.innerHTML = `<p style="color:var(--ink-muted);padding:1rem;text-align:center;grid-column:1/-1">Sin productos en esta categoría.</p>`;
     return;
   }
-
   grid.innerHTML = list.map(p => {
     const tagClass = `tag-${p.category}`;
     const tagLabel = { perro: "🐕 Perro", gato: "🐈 Gato", snack: "⭐ Snack" }[p.category] || p.category;
-    const imgHtml  = p.image
-      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-      : "";
+    const imgHtml  = p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : "";
     const emoji    = { perro: "🐕", gato: "🐱", snack: "🦴" }[p.category] || "🐾";
     const fallback = `<span class="img-fallback" style="${p.image ? 'display:none' : ''}">${emoji}</span>`;
-
+    const ptsLabel = p.puntos ? `<span class="pts-badge">+${p.puntos} pts</span>` : "";
     return `
       <article class="product-card" data-id="${p.id}">
         <div class="card-img-wrap">
-          ${imgHtml}
-          ${fallback}
+          ${imgHtml}${fallback}
           <span class="category-tag ${tagClass}">${tagLabel}</span>
           ${renderBadgeDescuento(p)}
+          ${ptsLabel}
         </div>
         <div class="card-body">
           <p class="card-brand">${p.brand || ""}</p>
@@ -101,11 +92,9 @@ function renderCatalog(list) {
         </div>
       </article>`;
   }).join("");
-
   actualizarBanner();
 }
 
-// ── FILTERS ───────────────────────────────────────────────────────
 function initFilters() {
   document.querySelectorAll(".filter-chip").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -118,12 +107,10 @@ function initFilters() {
   });
 }
 
-// ── CART ──────────────────────────────────────────────────────────
 function addToCart(id) {
   cart[id] = (cart[id] || 0) + 1;
   updateCartBadge();
   showToast("Agregado al carrito 🐾");
-  // Pulse animation on badge
   const badge = document.getElementById("cart-badge");
   badge.classList.remove("pulse");
   void badge.offsetWidth;
@@ -149,6 +136,13 @@ function cartTotal() {
   }, 0);
 }
 
+function cartPuntosTotal() {
+  return Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = products.find(x => x.id == id);
+    return sum + ((p?.puntos || 0) * qty);
+  }, 0);
+}
+
 function cartItems() {
   return Object.entries(cart)
     .filter(([, qty]) => qty > 0)
@@ -156,7 +150,6 @@ function cartItems() {
     .filter(x => x.product);
 }
 
-// ── CART DRAWER ───────────────────────────────────────────────────
 function initCartEvents() {
   document.getElementById("cart-toggle").addEventListener("click", openCart);
   document.getElementById("cart-backdrop").addEventListener("click", closeCart);
@@ -184,7 +177,7 @@ function setCartStep(step) {
 }
 
 function renderCartItems() {
-  const items = cartItems();
+  const items     = cartItems();
   const container = document.getElementById("cart-items-list");
 
   if (!items.length) {
@@ -198,18 +191,16 @@ function renderCartItems() {
     return;
   }
 
+  const puntosTotal = cartPuntosTotal();
   container.innerHTML = items.map(({ product: p, qty }) => {
     const emoji = { perro: "🐕", gato: "🐱", snack: "🦴" }[p.category] || "🐾";
-    const thumbImg = p.image
-      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.textContent='${emoji}'">`
-      : emoji;
-
+    const ptsItem = p.puntos ? `<span style="font-size:10px;color:var(--gold);font-weight:700">+${p.puntos * qty} pts</span>` : "";
     return `
       <div class="cart-item-row">
         <div class="ci-thumb">${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">` : emoji}</div>
         <div class="ci-info">
           <p class="ci-name">${p.name}</p>
-          <p class="ci-price">$${formatPrice(calcularPrecioFinal(p))} × ${qty} = <strong>$${formatPrice(calcularPrecioFinal(p) * qty)}</strong></p>
+          <p class="ci-price">$${formatPrice(calcularPrecioFinal(p))} × ${qty} = <strong>$${formatPrice(calcularPrecioFinal(p) * qty)}</strong> ${ptsItem}</p>
         </div>
         <div class="qty-ctrl">
           <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
@@ -219,11 +210,15 @@ function renderCartItems() {
       </div>`;
   }).join("");
 
+  const puntosHtml = puntosTotal > 0
+    ? `<div style="text-align:center;margin-top:8px;padding:8px;background:var(--gold-light);border-radius:8px;font-size:13px;font-weight:700;color:var(--gold)">⭐ Ganarás ${puntosTotal} puntos con este pedido</div>`
+    : "";
+
+  container.innerHTML += puntosHtml;
   document.getElementById("cart-subtotal").textContent = `$${formatPrice(cartTotal())}`;
   document.getElementById("btn-to-form").disabled = false;
 }
 
-// ── ORDER FORM STEP ───────────────────────────────────────────────
 function goToForm() {
   if (!cartItems().length) return;
   renderOrderSummaryMini();
@@ -236,31 +231,34 @@ function goBackToItems() {
 }
 
 function renderOrderSummaryMini() {
-  const items = cartItems();
-  const rows  = items.map(({ product: p, qty }) =>
-    `<div class="osm-row"><span>${p.name} ×${qty}</span><strong>$${formatPrice(p.price * qty)}</strong></div>`
+  const items      = cartItems();
+  const puntosTotal = cartPuntosTotal();
+  const rows = items.map(({ product: p, qty }) =>
+    `<div class="osm-row"><span>${p.name} ×${qty}</span><strong>$${formatPrice(calcularPrecioFinal(p) * qty)}</strong></div>`
   ).join("");
+  const ptsRow = puntosTotal > 0
+    ? `<div class="osm-row" style="color:var(--gold);font-weight:700"><span>⭐ Puntos a ganar</span><strong>+${puntosTotal} pts</strong></div>`
+    : "";
   document.getElementById("order-summary-mini").innerHTML = `
     ${rows}
-    <div class="osm-total"><span>Total</span><span>$${formatPrice(cartTotal())}</span></div>`;
+    <div class="osm-total"><span>Total</span><span>$${formatPrice(cartTotal())}</span></div>
+    ${ptsRow}`;
 }
 
-// ── WHATSAPP SEND ─────────────────────────────────────────────────
 function sendOrder() {
   const name    = document.getElementById("f-name").value.trim();
   const phone   = document.getElementById("f-phone").value.trim();
   const address = document.getElementById("f-address").value.trim();
   const notes   = document.getElementById("f-notes").value.trim();
 
-  // Validation
   if (!name)    { focusField("f-name",    "Escribe tu nombre"); return; }
   if (!phone)   { focusField("f-phone",   "Escribe tu teléfono"); return; }
   if (!address) { focusField("f-address", "Escribe tu dirección"); return; }
 
-  const items = cartItems();
+  const items       = cartItems();
+  const puntosTotal = cartPuntosTotal();
   if (!items.length) { alert("El carrito está vacío"); return; }
 
-  // ── Build the WhatsApp message ─────────────────────────────────
   let msg = `🐾 *Pedido - ${STORE_NAME}*\n\n`;
   msg += `👤 *Nombre:* ${name}\n`;
   msg += `📱 *Teléfono:* ${phone}\n`;
@@ -268,35 +266,40 @@ function sendOrder() {
   if (notes) msg += `📝 *Notas:* ${notes}\n`;
   msg += `\n*─── Productos ───*\n`;
   items.forEach(({ product: p, qty }) => {
-    msg += `• ${p.name} (${p.weight || ""}) × ${qty} = $${formatPrice(p.price * qty)}\n`;
+    msg += `• ${p.name} (${p.weight || ""}) × ${qty} = $${formatPrice(calcularPrecioFinal(p) * qty)}\n`;
   });
-  msg += `\n💰 *Total estimado: $${formatPrice(cartTotal())} MXN*`;
+  msg += `\n💰 *Total: $${formatPrice(cartTotal())} MXN*`;
+  if (puntosTotal > 0) msg += `\n⭐ *Puntos ganados: +${puntosTotal} pts*`;
   msg += `\n\n_Pedido generado desde el catálogo web de ${STORE_NAME}_`;
 
-  // Log to console (opcional: revisar desde DevTools)
-  console.log("── NUEVO PEDIDO ──────────────────────────────");
-  console.log({ nombre: name, telefono: phone, direccion: address, notas: notes, items: items.map(i => ({ producto: i.product.name, cantidad: i.qty, subtotal: i.product.price * i.qty })), total: cartTotal() });
-  console.log("──────────────────────────────────────────────");
+  // Guardar en Notion con items estructurados incluyendo puntos
+  const itemsData = items.map(({ product: p, qty }) => ({
+    id:       p.id,
+    name:     p.name,
+    brand:    p.brand || "",
+    weight:   p.weight || "",
+    qty,
+    price:    calcularPrecioFinal(p),
+    costo:    p.costo || 0,
+    puntos:   p.puntos || 0,
+    subtotal: calcularPrecioFinal(p) * qty,
+  }));
 
-  // Vamos a guardar en notion
   fetch("/.netlify/functions/save-order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    nombre:    name,
-    telefono:  phone,
-    direccion: address,
-    productos: items.map(i => `${i.product.name} x${i.qty}`).join(", "),
-    total:     cartTotal()
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nombre:    name,
+      telefono:  phone,
+      direccion: address,
+      notas:     notes,
+      items:     itemsData,
+      total:     cartTotal()
     })
   }).catch(err => console.error("Error guardando pedido:", err));
 
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 
-  // Open WhatsApp
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-
-  // Reset
   cart = {};
   updateCartBadge();
   closeCart();
@@ -307,22 +310,17 @@ function sendOrder() {
   showToast("¡Pedido enviado! Revisa WhatsApp 🚀");
 }
 
-// ── HELPERS ───────────────────────────────────────────────────────
-function formatPrice(n) {
-  return Number(n).toLocaleString("es-MX");
-}
+function formatPrice(n) { return Number(n).toLocaleString("es-MX"); }
 
 function showToast(msg) {
   const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
+  t.textContent = msg; t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2400);
 }
 
 function focusField(id, hint) {
   const el = document.getElementById(id);
-  el.focus();
-  el.placeholder = hint;
+  el.focus(); el.placeholder = hint;
   el.style.borderColor = "var(--red)";
   setTimeout(() => { el.style.borderColor = ""; }, 2000);
 }
