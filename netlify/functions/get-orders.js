@@ -1,6 +1,5 @@
 exports.handler = async (event) => {
   const NOTION_KEY = process.env.NOTION_KEY;
-  const NOTION_DB  = process.env.NOTION_DB;
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -8,7 +7,6 @@ exports.handler = async (event) => {
   };
 
   try {
-    // Buscar la base de datos real
     const searchRes = await fetch("https://api.notion.com/v1/search", {
       method: "POST",
       headers: {
@@ -26,7 +24,6 @@ exports.handler = async (event) => {
     const database   = searchData.results?.[0];
     if (!database) return { statusCode: 404, headers, body: JSON.stringify({ error: "Base de datos no encontrada" }) };
 
-    // Leer todos los pedidos
     const dbRes = await fetch(`https://api.notion.com/v1/databases/${database.id}/query`, {
       method: "POST",
       headers: {
@@ -45,13 +42,14 @@ exports.handler = async (event) => {
       const props = page.properties;
       return {
         id:        page.id,
-        cliente:   props.Cliente?.title?.[0]?.plain_text || "",
-        telefono:  props.Telefono?.phone_number || "",
+        cliente:   props.Cliente?.title?.[0]?.plain_text   || "",
+        telefono:  props.Telefono?.phone_number             || "",
         direccion: props.Direccion?.rich_text?.[0]?.plain_text || "",
-        productos: props.Producto?.rich_text?.[0]?.plain_text || "",
-        total:     props.Total?.number || 0,
-        fecha:     props.Fecha?.date?.start || "",
-        estatus:   props.Estatus?.multi_select?.[0]?.name || "Nuevo",
+        productos: props.Producto?.rich_text?.[0]?.plain_text  || "",
+        itemsJSON: props.Items?.rich_text?.[0]?.plain_text     || "",  // ← campo añadido
+        total:     props.Total?.number                      || 0,
+        fecha:     props.Fecha?.date?.start                 || "",
+        estatus:   props.Estatus?.multi_select?.[0]?.name  || "Nuevo",
       };
     });
 
