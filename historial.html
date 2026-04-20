@@ -928,7 +928,7 @@ async function cargarRecordatorios() {
     productos.forEach(p => { semanasMap[p.id] = p.semanas || 4; });
 
     // Solo pedidos entregados con itemsJSON
-    const entregados = (ordersData.pedidos || []).filter(p => p.estatus === "Entregado" && p.itemsJSON);
+    const entregados = (ordersData.pedidos || []).filter(p => p.estatus === "Entregado");
 
     // Agrupar por cliente — conservar solo el pedido más reciente
     const clienteMap = {};
@@ -944,9 +944,11 @@ async function cargarRecordatorios() {
       // Leer semanas del producto principal (mayor subtotal)
       let semanas = 4;
       try {
-        const items = JSON.parse(pedido.itemsJSON);
-        const principal = [...items].sort((a, b) => b.subtotal - a.subtotal)[0];
-        if (principal) semanas = semanasMap[principal.id] || principal.semanas || 4;
+        if (pedido.itemsJSON) {
+          const items = JSON.parse(pedido.itemsJSON);
+          const principal = [...items].sort((a, b) => b.subtotal - a.subtotal)[0];
+          if (principal) semanas = semanasMap[principal.id] || principal.semanas || 4;
+        }
       } catch(e) {}
 
       const dias          = semanas * 7;
