@@ -312,14 +312,6 @@
   <h1 class="page-title">Historial de ventas 📊</h1>
   <p class="page-sub" id="last-updated">Cargando datos desde Notion...</p>
 
-  <!-- Margen global (respaldo cuando no hay costo en el producto) -->
-  <div class="config-bar">
-    <span class="config-label">💰 Margen global de respaldo:</span>
-    <input class="config-input" type="number" id="margen-input" value="30" min="0" max="100" />
-    <span class="config-label">%</span>
-    <span class="config-hint">Se usa solo cuando un producto no tiene costo definido en products.json</span>
-  </div>
-
   <!-- Filtros -->
   <div class="period-bar">
     <button class="period-btn active" data-period="7">7 días</button>
@@ -336,9 +328,9 @@
       <div class="metric-sub">en el período</div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Ganancia estimada</div>
+      <div class="metric-label">Ganancia real</div>
       <div class="metric-value green" id="m-ganancia">—</div>
-      <div class="metric-pct" id="m-ganancia-pct">—% margen</div>
+      <div class="metric-pct" id="m-ganancia-pct">— margen</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Pedidos</div>
@@ -447,7 +439,6 @@
 let todosLosPedidos = [];
 let productos       = [];
 let periodoActivo   = 7;
-let margen          = 30;
 let chart           = null;
 
 const ESTATUSES = ["Nuevo", "En preparación", "En camino", "Entregado"];
@@ -470,10 +461,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  document.getElementById("margen-input").addEventListener("input", e => {
-    margen = Math.max(0, Math.min(100, parseInt(e.target.value) || 0));
-    renderDashboard();
-  });
 });
 
 async function cargarProductos() {
@@ -508,17 +495,17 @@ function filtrarPedidos() {
 // Calcula ganancia de un pedido usando costos reales del JSON
 function calcularGanancia(pedido) {
   const total = pedido.total || 0;
-
-  // Opción 1: usar items estructurados con ID (pedidos nuevos)
   if (pedido.itemsJSON) {
     try {
       const items = JSON.parse(pedido.itemsJSON);
-      let costoTotal = 0; let itemsConCosto = 0;
+      let costoTotal = 0;
+      let itemsConCosto = 0;
       items.forEach(item => {
-        // Buscar costo en products.json por ID exacto
-        const prod = productos.find(p => p.id == item.id);
-        const costo = prod?.costo || item.costo || 0;
-        if (costo) { costoTotal += costo * item.qty; itemsConCosto++; }
+        const costo = item.costo || 0;
+        if (costo > 0) {
+          costoTotal += costo * item.qty;
+          itemsConCosto++;
+        }
       });
       if (itemsConCosto > 0) {
         const ganancia = Math.round(total - costoTotal);
@@ -527,9 +514,8 @@ function calcularGanancia(pedido) {
       }
     } catch(e) {}
   }
-
-  // Opción 2: fallback con margen global (pedidos viejos sin items estructurados)
-  return { ganancia: Math.round(total * margen / 100), pct: margen, preciso: false };
+  // Sin datos de costo — no estima, muestra 0
+  return { ganancia: 0, pct: 0, preciso: false };
 }
 
 function renderDashboard() {
