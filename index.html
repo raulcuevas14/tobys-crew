@@ -101,6 +101,18 @@
         <input type="text" id="f-address" placeholder="Calle, número, colonia" autocomplete="street-address" />
       </div>
       <div class="form-group">
+        <label for="f-codigo">¿Tienes un código de descuento?</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="f-codigo" placeholder="Ej: PRIMERA10"
+            style="text-transform:uppercase;letter-spacing:1px;flex:1" />
+          <button type="button" onclick="aplicarCodigo()"
+            style="flex-shrink:0;background:var(--ink);color:white;border:none;border-radius:var(--radius-sm);padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">
+            Aplicar
+          </button>
+        </div>
+        <p id="codigo-status" style="font-size:12px;margin-top:5px;min-height:16px;font-weight:600"></p>
+      </div>
+      <div class="form-group">
         <label for="f-notes">Notas adicionales</label>
         <textarea id="f-notes" placeholder="Horario de entrega, instrucciones especiales…"></textarea>
       </div>

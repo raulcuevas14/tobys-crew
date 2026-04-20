@@ -73,10 +73,17 @@ function actualizarBanner() {
 // ── OFERTA: 5% EN SEGUNDO ARTÍCULO ───────────────────────────────
 // Retorna el monto a descontar del segundo producto más costoso
 function getDescuentoSegundoMonto() {
-  const items = cartItems();
-  if (items.length < 2) return 0;
-  const precios = items.map(({ product: p }) => calcularPrecioFinal(p)).sort((a, b) => b - a);
-  return Math.round(precios[1] * DESCUENTO_SEGUNDO_PCT / 100);
+  if (codigoAplicado) return 0;
+  // Expandir en unidades individuales para capturar 2× el mismo producto
+  const unidades = [];
+  cartItems().forEach(({ product: p, qty }) => {
+    for (let i = 0; i < qty; i++) {
+      unidades.push(calcularPrecioFinal(p));
+    }
+  });
+  if (unidades.length < 2) return 0;
+  unidades.sort((a, b) => b - a);
+  return Math.round(unidades[1] * DESCUENTO_SEGUNDO_PCT / 100);
 }
 
 // ── OFERTA: CÓDIGO PRIMERA COMPRA ────────────────────────────────
