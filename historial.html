@@ -59,20 +59,33 @@
     }
 
 
-    /* ── FIDELIDAD ───────────────────────────────────────────────── */
-    .loyalty-config {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-      background: #F0EDE8; border-radius: 12px; padding: 0.9rem 1.25rem;
-      margin-bottom: 1rem; font-size: 13px;
-    }
-    .lc-group { display: flex; align-items: center; gap: 8px; }
-    .lc-label { font-weight: 600; color: var(--ink-soft); }
-    .lc-input {
-      width: 72px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
-      padding: 5px 8px; font-size: 13px; font-weight: 700; text-align: center;
-      background: white; color: var(--ink); outline: none; font-family: 'Fraunces', serif;
-    }
-    .lc-input:focus { border-color: var(--gold); }
+    /* ── FIDELIDAD — PUNTOS ─────────────────────────────────────── */
+    /* Pestañas */
+    .loyalty-tabs { display:flex; border-bottom:1.5px solid var(--cream-dark); padding:0 1.25rem; margin-bottom:1rem; }
+    .loyalty-tab  { padding:9px 18px; font-size:13px; font-weight:600; border:none; background:none; cursor:pointer; color:var(--ink-muted); border-bottom:2px solid transparent; margin-bottom:-1.5px; font-family:'Plus Jakarta Sans',sans-serif; transition:all 0.15s; }
+    .loyalty-tab.active { color:var(--ink); border-bottom-color:var(--ink); }
+    /* Catálogo de premios */
+    .premios-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; padding:1.25rem; }
+    .premio-card  { background:var(--white); border:1.5px solid var(--cream-dark); border-radius:12px; padding:12px; text-align:center; }
+    .premio-icon  { font-size:26px; margin-bottom:4px; }
+    .premio-nombre{ font-size:12px; font-weight:700; margin-bottom:4px; color:var(--ink); }
+    .premio-pts   { font-family:'Fraunces',serif; font-size:18px; font-weight:900; color:var(--gold); }
+    .premio-lbl   { font-size:10px; color:var(--ink-muted); }
+    /* Bloque de puntos en tarjeta */
+    .cc-puntos-blk { background:var(--ink); border-radius:10px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .cc-puntos-num { font-family:'Fraunces',serif; font-size:26px; font-weight:900; color:var(--gold-mid); line-height:1; }
+    .cc-puntos-lbl { font-size:10px; color:rgba(255,255,255,0.45); margin-top:2px; }
+    .cc-puntos-right { text-align:right; font-size:10px; color:rgba(255,255,255,0.35); line-height:1.7; }
+    /* Modal premios */
+    .premio-opt { display:flex; align-items:center; justify-content:space-between; padding:9px 12px; border:1.5px solid var(--cream-dark); border-radius:10px; cursor:pointer; transition:all 0.15s; background:var(--cream); margin-bottom:7px; }
+    .premio-opt:hover:not(.disabled){ border-color:var(--gold); }
+    .premio-opt.selected { border-color:var(--gold); background:var(--gold-light); }
+    .premio-opt.disabled { opacity:0.4; cursor:not-allowed; }
+    .po-left { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--ink); }
+    .po-pts  { font-family:'Fraunces',serif; font-size:14px; font-weight:900; color:var(--gold); white-space:nowrap; }
+    /* Historial acordeón */
+    .hist-row { padding:8px 12px; border-bottom:1px solid var(--cream-dark); font-size:12px; }
+    .hist-row:last-of-type { border-bottom:none; }
 
     .client-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; padding: 1.25rem; }
     .client-card {
@@ -369,50 +382,45 @@
   </div>
 </div>
 
-  <!-- ── FIDELIDAD ─────────────────────────────────────────────── -->
+  <!-- ── FIDELIDAD — PUNTOS ─────────────────────────────────────── -->
   <div class="table-card" style="margin-top:0">
     <div class="table-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
       <div class="card-title">🎁 Programa de beneficios</div>
       <button onclick="cargarClientes()" style="background:var(--cream);border:1.5px solid var(--cream-dark);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">↻ Actualizar</button>
     </div>
 
-    <!-- Configuración de umbrales -->
-    <div class="loyalty-config">
-      <div class="lc-group">
-        <span class="lc-label">🏆 Premio cada</span>
-        <input class="lc-input" type="number" id="umbral-pedidos" value="5" min="1" max="99" />
-        <span style="font-size:13px;color:var(--ink-soft)">pedidos</span>
-      </div>
-      <div class="lc-group">
-        <span class="lc-label">💰 Premio cada</span>
-        <input class="lc-input" type="number" id="umbral-monto" value="1000" min="100" step="100" style="width:90px" />
-        <span style="font-size:13px;color:var(--ink-soft)">pesos acumulados</span>
-      </div>
+    <div class="loyalty-tabs">
+      <button class="loyalty-tab active" onclick="switchTab('clientes',this)">👥 Clientes</button>
+      <button class="loyalty-tab" onclick="switchTab('premios',this)">🏆 Catálogo de premios</button>
     </div>
 
-    <div id="clientes-container">
-      <div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>
+    <div id="loyalty-premios" style="display:none">
+      <div class="premios-grid" id="premios-grid"></div>
+    </div>
+
+    <div id="loyalty-clientes">
+      <div id="clientes-container">
+        <div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>
+      </div>
     </div>
   </div>
 
-  <!-- Modal para registrar premio -->
+  <!-- Modal canje de puntos -->
   <div class="modal-overlay" id="prize-modal">
     <div class="modal-box">
-      <div class="modal-title">🎁 Registrar premio</div>
+      <div class="modal-title">🎁 Canjear puntos</div>
       <div class="modal-sub" id="modal-cliente-nombre">Cliente</div>
-      <label class="modal-label">Tipo de premio</label>
-      <select class="modal-select" id="modal-tipo-premio">
-        <option value="Producto gratis">🎁 Producto gratis</option>
-        <option value="Snack sorpresa">⭐ Snack o regalo sorpresa</option>
-        <option value="Descuento 10%">💸 Descuento 10% próxima compra</option>
-        <option value="Descuento 15%">💸 Descuento 15% próxima compra</option>
-        <option value="Descuento 20%">💸 Descuento 20% próxima compra</option>
-      </select>
-      <label class="modal-label">Nota adicional (opcional)</label>
-      <input class="modal-input" type="text" id="modal-nota" placeholder="Ej: Royal Canin 3kg gratis" />
+      <div class="cc-puntos-blk" style="margin-bottom:1rem">
+        <div>
+          <div class="cc-puntos-num" id="modal-puntos-val">0</div>
+          <div class="cc-puntos-lbl">puntos disponibles</div>
+        </div>
+        <span style="font-size:24px">🐾</span>
+      </div>
+      <div id="modal-premios-lista"></div>
       <div class="modal-actions">
         <button class="modal-btn-cancel" onclick="cerrarModal()">Cancelar</button>
-        <button class="modal-btn-confirm" onclick="confirmarPremio()">✓ Marcar como entregado</button>
+        <button class="modal-btn-confirm" id="modal-confirm-btn" onclick="confirmarPremio()" disabled>Confirmar canje</button>
       </div>
     </div>
   </div>
@@ -684,10 +692,43 @@ function showToast(msg) {
 }
 
 
-// ── FIDELIDAD ─────────────────────────────────────────────────────
-let todosLosClientes  = [];
-let clienteModalActual = null;
+// ── FIDELIDAD — SISTEMA DE PUNTOS ────────────────────────────────
+// ══ DEFINE TUS PREMIOS AQUÍ ══
+// Modifica puntos requeridos, agrega o quita premios libremente.
+const PREMIOS = [
+  { id: "snack",   nombre: "Snack sorpresa",         puntos: 150,  icono: "⭐" },
+  { id: "desc10",  nombre: "Descuento 10%",           puntos: 200,  icono: "💸" },
+  { id: "desc50",  nombre: "Descuento $50",            puntos: 300,  icono: "💸" },
+  { id: "desc15",  nombre: "Descuento 15%",            puntos: 400,  icono: "💸" },
+  { id: "prod200", nombre: "Producto gratis (~$200)",  puntos: 500,  icono: "🎁" },
+  { id: "desc20",  nombre: "Descuento 20%",            puntos: 600,  icono: "💸" },
+  { id: "prod500", nombre: "Producto gratis (~$500)",  puntos: 1000, icono: "🎁" },
+];
 
+let todosLosClientes   = [];
+let clienteModalActual = null;
+let premioSeleccionado = null;
+
+// Pestañas
+function switchTab(tab, btn) {
+  document.querySelectorAll(".loyalty-tab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("loyalty-clientes").style.display = tab === "clientes" ? "block" : "none";
+  document.getElementById("loyalty-premios").style.display  = tab === "premios"  ? "block" : "none";
+  if (tab === "premios") renderPremiosGrid();
+}
+
+function renderPremiosGrid() {
+  document.getElementById("premios-grid").innerHTML = PREMIOS.map(p => `
+    <div class="premio-card">
+      <div class="premio-icon">${p.icono}</div>
+      <div class="premio-nombre">${p.nombre}</div>
+      <div class="premio-pts">${p.puntos.toLocaleString("es-MX")}</div>
+      <div class="premio-lbl">puntos</div>
+    </div>`).join("");
+}
+
+// Cargar clientes desde Notion via get-customers
 async function cargarClientes() {
   document.getElementById("clientes-container").innerHTML =
     '<div class="loading"><span class="loading-spinner">🐾</span>Cargando clientes...</div>';
@@ -703,192 +744,211 @@ async function cargarClientes() {
   }
 }
 
-function renderClientes() {
-  const umbralPedidos = parseInt(document.getElementById("umbral-pedidos").value) || 5;
-  const umbralMonto   = parseInt(document.getElementById("umbral-monto").value)   || 1000;
-  const container     = document.getElementById("clientes-container");
+function tienePremioDisponible(c) {
+  return (c.puntosDisponibles || 0) >= Math.min(...PREMIOS.map(p => p.puntos));
+}
 
+function proximoPremio(pts) {
+  return PREMIOS.find(p => p.puntos > pts) || PREMIOS[PREMIOS.length - 1];
+}
+
+function renderClientes() {
+  const container = document.getElementById("clientes-container");
   if (!todosLosClientes.length) {
-    container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Sin clientes registrados aún</p></div>';
+    container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Sin clientes con pedidos entregados aún</p></div>';
     return;
   }
-
-  // Ordenar: primero los que tienen premio listo
   const sorted = [...todosLosClientes].sort((a, b) => {
-    const aListo = premioPedidosListo(a, umbralPedidos) || premioMontoListo(a, umbralMonto);
-    const bListo = premioPedidosListo(b, umbralPedidos) || premioMontoListo(b, umbralMonto);
-    if (aListo && !bListo) return -1;
-    if (!aListo && bListo) return 1;
-    return b.totalCompras - a.totalCompras;
+    const aL = tienePremioDisponible(a), bL = tienePremioDisponible(b);
+    if (aL && !bL) return -1; if (!aL && bL) return 1;
+    return (b.puntosDisponibles || 0) - (a.puntosDisponibles || 0);
   });
-
-  container.innerHTML = `<div class="client-grid">${sorted.map(c => renderClienteCard(c, umbralPedidos, umbralMonto)).join("")}</div>`;
-
-  // Listeners para inputs de umbral
-  ["umbral-pedidos","umbral-monto"].forEach(id => {
-    document.getElementById(id).addEventListener("input", renderClientes);
-  });
+  container.innerHTML = `<div class="client-grid">${sorted.map(renderClienteCard).join("")}</div>`;
 }
 
-function premioPedidosListo(c, umbral) {
-  const ciclo = c.totalPedidos % umbral;
-  return ciclo === 0 && c.totalPedidos > 0;
-}
-
-function premioMontoListo(c, umbral) {
-  const ciclos       = Math.floor(c.totalCompras / umbral);
-  const ciclosCanjeados = c.canjesRecibidos || 0;
-  return ciclos > ciclosCanjeados;
-}
-
-function renderClienteCard(c, umbralPedidos, umbralMonto) {
-  const pListo  = premioPedidosListo(c, umbralPedidos);
-  const mListo  = premioMontoListo(c, umbralMonto);
-  const listo   = pListo || mListo;
-
-  // Progreso pedidos — ciclo actual desde el último premio
-  const pedidosGanados = Math.floor(c.totalPedidos / umbralPedidos);
-  const pedidosCiclo   = pListo
-    ? umbralPedidos
-    : c.totalPedidos - (pedidosGanados * umbralPedidos);
-  const pctPedidos     = Math.min(100, Math.round((pedidosCiclo / umbralPedidos) * 100));
-
-  // Progreso monto — ciclo actual desde el último premio por monto
-  const ciclosGanados  = Math.floor(c.totalCompras / umbralMonto);
-  const ciclosCanjeados = c.canjesRecibidos || 0;
-  const montoCiclo     = mListo
-    ? umbralMonto
-    : c.totalCompras - (ciclosGanados * umbralMonto);
-  const pctMonto       = Math.min(100, Math.round((montoCiclo / umbralMonto) * 100));
-
-  const cerca = (pctPedidos >= 70 || pctMonto >= 70) && !listo;
+function renderClienteCard(c) {
+  const listo    = tienePremioDisponible(c);
+  const pts      = c.puntosDisponibles || 0;
+  const cerca    = !listo && pts >= Math.min(...PREMIOS.map(p => p.puntos)) * 0.6;
   const initials = c.nombre.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
-  const ultimaFecha = c.ultimaCompra
-    ? new Date(c.ultimaCompra + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short" })
+  const fecha    = c.ultimaCompra
+    ? new Date(c.ultimaCompra + "T12:00:00").toLocaleDateString("es-MX", { day:"numeric", month:"short" })
     : "—";
+  const siguiente = proximoPremio(pts);
+  const pctPuntos = Math.min(100, Math.round((pts / siguiente.puntos) * 100));
+
+  // Historial de puntos por pedido (acordeón)
+  const historial = c.historialPuntos || [];
+  const cardId    = "h" + (c.telefono || c.nombre).replace(/\D/g, "").slice(-8);
+  const histHtml  = historial.length > 0
+    ? `<div style="margin-top:10px">
+        <button onclick="toggleHist('${cardId}')"
+          style="background:none;border:none;font-size:12px;font-weight:700;color:var(--gold);cursor:pointer;padding:0;font-family:inherit;display:flex;align-items:center;gap:5px">
+          ⭐ Puntos por compra <span id="arr-${cardId}" style="font-size:10px">▼</span>
+        </button>
+        <div id="${cardId}" style="display:none;margin-top:8px;border-radius:10px;overflow:hidden;border:1px solid var(--cream-dark)">
+          ${historial.map(h => {
+            const fd = h.fecha
+              ? new Date(h.fecha + "T12:00:00").toLocaleDateString("es-MX", { day:"numeric", month:"short", year:"numeric" })
+              : "—";
+            return `<div class="hist-row">
+              <div style="display:flex;justify-content:space-between;margin-bottom:${h.productos?.length ? 3 : 0}px">
+                <span style="color:var(--ink-soft)">${fd} · ${formatMoney(h.total)}</span>
+                <span style="font-family:'Fraunces',serif;font-weight:900;font-size:14px;color:${h.puntos > 0 ? 'var(--gold)' : 'var(--ink-muted)'}">
+                  ${h.puntos > 0 ? '+' + h.puntos + ' pts' : 'sin pts'}
+                </span>
+              </div>
+              ${h.productos?.length
+                ? `<div style="color:var(--ink-muted);font-size:10px;line-height:1.6">${h.productos.join(" · ")}</div>`
+                : ''}
+            </div>`;
+          }).join("")}
+          <div style="padding:8px 12px;background:var(--cream);display:flex;justify-content:space-between;font-size:12px;font-weight:700">
+            <span>Total ganado</span>
+            <span style="color:var(--gold)">${(c.puntosGanados||0).toLocaleString("es-MX")} pts</span>
+          </div>
+        </div>
+      </div>`
+    : `<p style="font-size:11px;color:var(--ink-muted);margin-top:8px">Sin pedidos entregados con puntos aún</p>`;
 
   return `
     <div class="client-card ${listo ? 'premio-listo' : cerca ? 'premio-cerca' : ''}">
       <div class="cc-header">
-        <div class="cc-avatar">${initials}</div>
+        <div class="cc-avatar" style="${listo ? 'background:var(--gold)' : ''}">${initials}</div>
         <div>
           <div class="cc-name">${c.nombre}</div>
           <div class="cc-phone">${c.telefono || "Sin teléfono"}</div>
         </div>
-        ${listo ? '<span class="cc-prize-badge">🎁 Premio listo</span>' : ''}
+        ${listo ? '<span class="cc-prize-badge">⭐ Premio listo</span>' : ''}
       </div>
 
       <div class="cc-stats">
-        <div class="cc-stat">
-          <div class="cc-stat-val">${c.totalPedidos}</div>
-          <div class="cc-stat-lbl">Pedidos</div>
+        <div class="cc-stat"><div class="cc-stat-val">${c.totalPedidos}</div><div class="cc-stat-lbl">Pedidos</div></div>
+        <div class="cc-stat"><div class="cc-stat-val">${formatMoney(c.totalCompras)}</div><div class="cc-stat-lbl">Acumulado</div></div>
+        <div class="cc-stat"><div class="cc-stat-val" style="color:var(--green)">${c.canjesRecibidos || 0}</div><div class="cc-stat-lbl">Canjes</div></div>
+      </div>
+
+      <!-- Bloque grande de puntos -->
+      <div class="cc-puntos-blk">
+        <div>
+          <div class="cc-puntos-num">${pts.toLocaleString("es-MX")}</div>
+          <div class="cc-puntos-lbl">puntos disponibles</div>
         </div>
-        <div class="cc-stat">
-          <div class="cc-stat-val">${formatMoney(c.totalCompras)}</div>
-          <div class="cc-stat-lbl">Acumulado</div>
-        </div>
-        <div class="cc-stat">
-          <div class="cc-stat-val" style="color:var(--green)">${c.canjesRecibidos || 0}</div>
-          <div class="cc-stat-lbl">Premios</div>
+        <div class="cc-puntos-right">
+          <div>${(c.puntosGanados||0).toLocaleString("es-MX")} ganados</div>
+          <div>${(c.puntosCanjeados||0).toLocaleString("es-MX")} canjeados</div>
         </div>
       </div>
 
+      <!-- Progreso al siguiente premio -->
       <div class="cc-progress">
         <div class="cc-progress-labels">
-          <span>Pedidos ${pedidosCiclo}/${umbralPedidos}</span>
-          <span>${pctPedidos}%</span>
+          <span>${siguiente.icono} Siguiente: ${siguiente.nombre}</span>
+          <span>${pts.toLocaleString("es-MX")}/${siguiente.puntos} pts · ${pctPuntos}%</span>
         </div>
         <div class="progress-bar-wrap">
-          <div class="progress-bar-fill ${pListo ? 'green' : ''}" style="width:${pctPedidos}%"></div>
+          <div class="progress-bar-fill ${listo ? 'green' : ''}" style="width:${pctPuntos}%"></div>
         </div>
       </div>
 
-      <div class="cc-progress">
-        <div class="cc-progress-labels">
-          <span>Monto $${montoCiclo.toLocaleString("es-MX")}/$${umbralMonto.toLocaleString("es-MX")}</span>
-          <span>${pctMonto}%</span>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill ${mListo ? 'green' : ''}" style="width:${pctMonto}%"></div>
-        </div>
-      </div>
+      <!-- Historial acordeón -->
+      ${histHtml}
 
-      <div class="cc-canjes">
-    Premios ganados: <strong>${Math.floor(c.totalPedidos / umbralPedidos) + Math.floor(c.totalCompras / umbralMonto)}</strong>
-    &nbsp;·&nbsp; Canjeados: <strong>${c.canjesRecibidos || 0}</strong>
-    ${c.notasCanje ? `<br>Último: ${c.notasCanje.split("\n").pop()}` : ""}
-  </div>
-      <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px">Última compra: ${ultimaFecha}</div>
+      <div style="font-size:10px;color:var(--ink-muted);margin:8px 0">
+        Última compra: <strong>${fecha}</strong>
+        ${c.notasCanje ? ` · Último canje: ${c.notasCanje.split("\n").pop()}` : ""}
+      </div>
 
       <div class="cc-actions">
         <button class="cc-btn-prize" ${!listo ? 'disabled' : ''}
-          onclick="abrirModal(${JSON.stringify(c).replace(/"/g, '&quot;')})">
-          🎁 Registrar premio
+          onclick='abrirModal(${JSON.stringify(c).replace(/'/g,"&#39;")})'>
+          🎁 Canjear puntos
         </button>
-        ${c.telefono ? `<button class="cc-btn-wa" onclick="contactarCliente('${c.telefono}','${c.nombre}')" title="WhatsApp">💬</button>` : ''}
+        ${c.telefono ? `<button class="cc-btn-wa" onclick="notificarWA('${c.telefono}','${c.nombre}',${pts})" title="WhatsApp">💬</button>` : ''}
       </div>
     </div>`;
 }
 
+function toggleHist(id) {
+  const el  = document.getElementById(id);
+  const arr = document.getElementById("arr-" + id);
+  if (!el) return;
+  const open = el.style.display === "block";
+  el.style.display = open ? "none" : "block";
+  if (arr) arr.textContent = open ? "▼" : "▲";
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────
 function abrirModal(cliente) {
   clienteModalActual = cliente;
+  premioSeleccionado = null;
   document.getElementById("modal-cliente-nombre").textContent = `Para: ${cliente.nombre}`;
-  document.getElementById("modal-nota").value = "";
-  const modal = document.getElementById("prize-modal");
-  modal.classList.add("open");
+  document.getElementById("modal-puntos-val").textContent = (cliente.puntosDisponibles || 0).toLocaleString("es-MX");
+  document.getElementById("modal-confirm-btn").disabled = true;
+  const pts = cliente.puntosDisponibles || 0;
+  document.getElementById("modal-premios-lista").innerHTML = PREMIOS.map(p => {
+    const puede = pts >= p.puntos;
+    return `<div class="premio-opt ${!puede ? 'disabled' : ''}"
+      onclick="${puede ? `seleccionarPremio('${p.id}','${p.nombre}',${p.puntos})` : ''}">
+      <div class="po-left"><span style="font-size:18px">${p.icono}</span>${p.nombre}</div>
+      <span class="po-pts">${p.puntos.toLocaleString("es-MX")} pts</span>
+    </div>`;
+  }).join("");
+  document.getElementById("prize-modal").classList.add("open");
+}
+
+function seleccionarPremio(id, nombre, puntos) {
+  premioSeleccionado = { id, nombre, puntos };
+  document.querySelectorAll(".premio-opt:not(.disabled)").forEach(el => el.classList.remove("selected"));
+  const idx = PREMIOS.findIndex(p => p.id === id);
+  document.querySelectorAll(".premio-opt")[idx]?.classList.add("selected");
+  document.getElementById("modal-confirm-btn").disabled = false;
 }
 
 function cerrarModal() {
   document.getElementById("prize-modal").classList.remove("open");
-  clienteModalActual = null;
+  clienteModalActual = null; premioSeleccionado = null;
 }
 
 async function confirmarPremio() {
-  if (!clienteModalActual) return;
-  const tipo  = document.getElementById("modal-tipo-premio").value;
-  const nota  = document.getElementById("modal-nota").value.trim();
-  const premio = nota ? `${tipo} — ${nota}` : tipo;
-
-  const btnConfirm = document.querySelector(".modal-btn-confirm");
-  btnConfirm.disabled    = true;
-  btnConfirm.textContent = "Guardando...";
-
+  if (!clienteModalActual || !premioSeleccionado) return;
+  const btn = document.getElementById("modal-confirm-btn");
+  btn.disabled = true; btn.textContent = "Guardando...";
   try {
     const res = await fetch("/.netlify/functions/register-prize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        nombre:  clienteModalActual.nombre,
-        telefono: clienteModalActual.telefono,
-        premio,
-        pageId:  clienteModalActual.canjePageId || null
+        nombre:       clienteModalActual.nombre,
+        telefono:     clienteModalActual.telefono,
+        premio:       premioSeleccionado.nombre,
+        puntosUsados: premioSeleccionado.puntos,
+        pageId:       clienteModalActual.canjePageId || null
       })
     });
     const data = await res.json();
     if (!data.ok) throw new Error("Error al guardar");
-
     cerrarModal();
-    showToast(`🎁 Premio registrado para ${clienteModalActual.nombre}`);
+    showToast(`🎁 ${premioSeleccionado.nombre} canjeado (−${premioSeleccionado.puntos} pts)`);
     await cargarClientes();
-  } catch (err) {
+  } catch(err) {
     showToast("⚠️ Error al registrar, intenta de nuevo");
   } finally {
-    btnConfirm.disabled    = false;
-    btnConfirm.textContent = "✓ Marcar como entregado";
+    btn.disabled = false; btn.textContent = "Confirmar canje";
   }
 }
 
-function contactarCliente(telefono, nombre) {
+function notificarWA(telefono, nombre, pts) {
   const tel = telefono.replace(/\D/g, "");
   const num = tel.startsWith("52") ? tel : `52${tel}`;
-  const msg = `¡Hola ${nombre}! 🐾 Te escribimos de Toby's Crew. ¡Tienes un premio disponible por tu fidelidad! Contáctanos para reclamarlo.`;
+  const disponibles = PREMIOS.filter(p => pts >= p.puntos).map(p => `• ${p.icono} ${p.nombre} (${p.puntos} pts)`).join("\n");
+  const msg = disponibles
+    ? `¡Hola ${nombre}! 🐾 Tienes *${pts.toLocaleString("es-MX")} puntos* en Toby's Crew.\n\nPuedes canjearlos por:\n${disponibles}\n\n¡Escríbenos para reclamar tu premio!`
+    : `¡Hola ${nombre}! 🐾 Tienes *${pts.toLocaleString("es-MX")} puntos* en Toby's Crew. ¡Sigue comprando para ganar premios!`;
   window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// Cerrar modal al hacer clic fuera
-document.addEventListener("click", e => {
-  if (e.target.id === "prize-modal") cerrarModal();
-});
+document.addEventListener("click", e => { if (e.target.id === "prize-modal") cerrarModal(); });
 
 // ── RECORDATORIOS DE REABASTECIMIENTO ────────────────────────────
 // La duración de cada producto se lee desde el campo "semanas"
